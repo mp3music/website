@@ -1,0 +1,9 @@
+{
+    "require": {
+        "aracoool/dhttp" : "dev-master",
+        "sunra/php-simple-html-dom-parser": "v1.5.0",
+        "slim/slim": "2.*",
+        "sokil/php-mongo": "dev-master",
+        "ruflin/Elastica": "dev-master"
+    }
+}
