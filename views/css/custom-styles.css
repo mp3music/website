@@ -1,0 +1,157 @@
+.search-input{
+    margin-top: 36px;
+    width: 65%;
+}
+
+.input-text{
+    width: inherit !important;
+    margin-right:10px;
+}
+
+.search-input .custom-btn{
+    background-color:#f0faff;
+    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#f0faff, endColorstr=#e9edf0);
+    background-image:-moz-linear-gradient(top, #f0faff 0%, #e9edf0 25%,#d7dcde 100%);
+    background-image:linear-gradient(top, #f0faff 0%, #e9edf0 25%,#d7dcde 100%);
+    background-image:-webkit-linear-gradient(top, #f0faff 0%, #e9edf0 25%,#d7dcde 100%);
+    background-image:-o-linear-gradient(top, #f0faff 0%, #e9edf0 25%,#d7dcde 100%);
+    background-image:-ms-linear-gradient(top, #f0faff 0%, #e9edf0 25%,#d7dcde 100%);
+    background-image:-webkit-gradient(linear, right top, right bottom, color-stop(0%,#f0faff), color-stop(25%,#e9edf0),color-stop(100%,#d7dcde));
+}
+
+.row-buttons{
+    padding-bottom: 35px;
+    margin-left:2px;
+    padding-top:40px;
+}
+
+.play-button,
+.stream-button,
+.download-button{
+    height: 73px;
+    background-repeat:no-repeat ;
+}
+
+.play-button{
+    background-image:url("../images/play-button.png");
+}
+
+.stream-button{
+    background-image:url("../images/stream-button.png");
+}
+
+.download-button{
+    background-image:url("../images/download-button.png");
+}
+
+/*Content*/
+.blog-post .blog-post-title{
+    text-align: center;
+    font-size: 20px;
+    background-color:#f0faff;
+    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#f0faff, endColorstr=#e9edf0);
+    background-image:-moz-linear-gradient(top, #f0faff 0%, #e9edf0 25%,#d7dcde 100%);
+    background-image:linear-gradient(top, #f0faff 0%, #e9edf0 25%,#d7dcde 100%);
+    background-image:-webkit-linear-gradient(top, #f0faff 0%, #e9edf0 25%,#d7dcde 100%);
+    background-image:-o-linear-gradient(top, #f0faff 0%, #e9edf0 25%,#d7dcde 100%);
+    background-image:-ms-linear-gradient(top, #f0faff 0%, #e9edf0 25%,#d7dcde 100%);
+    background-image:-webkit-gradient(linear, right top, right bottom, color-stop(0%,#f0faff), color-stop(25%,#e9edf0),color-stop(100%,#d7dcde));
+    margin:0;
+    height:40px;
+    padding-top:10px;
+    font-weight:bold;
+}
+
+.blog-post-content{
+    border: 1px solid #A7A7A7;
+}
+
+/*.blog-post-content .table{*/
+    /*margin-top: 10px;*/
+/*}*/
+
+.table-list{
+    margin-bottom: 0 !important;
+}
+
+.table-list tr:hover{
+    background-color:#F2F2F2;
+}
+
+.blog-post-content .table-list .list-numeration{
+    background-color: #F2F2F2;
+    border: 1px solid #CCCCCC;
+    padding:15px 3px !important;
+    text-align: center;
+    font-size: 18px;
+    font-weight:bold;
+}
+
+.blog-post-content .table-list .song-name{
+    color: #3c4bf0 !important;
+}
+
+.sidebar-module{
+    border: 1px solid #A7A7A7;
+    border-top: 3px solid #A7A7A7;
+    padding:10px 19px;
+}
+
+.sidebar-module-inset{
+    background-image:url("../images/300x250-tryplay-v2.png");
+    height: 250px;
+    margin-bottom: 20px;
+    background-repeat:no-repeat ;
+    background-position:center;
+    background-size:100% no;
+}
+
+.sidebar-module.sidebar-archives,
+.sidebar-module.sidebar-social,
+.sidebar-module.sidebar-now-playing{
+    margin-top: 20px;
+}
+
+.list-group-item.glyphicon.glyphicon-forward span{
+    color: #3c4bf0 !important;
+}
+/*Content*/
+
+
+/*mp3 download page*/
+.blog-post-content .table.table-list .song-info{
+    width: 74px;
+    border-right:1px dashed #CCCCCC;
+}
+
+.blog-post-content .table.table-list .text-song{
+    font-size: 16px;
+}
+
+.list-inline.action-links{
+    margin-top: 10px;
+}
+
+.list-inline.action-links a{
+    margin-right: 6px;
+}
+/*mp3 download page*/
+
+
+/*top 100 downloads*/
+
+.blog-post-content .table-list .list-top-downloads{
+    background-color: #F2F2F2;
+    border: 1px solid #CCCCCC;
+    /*padding:15px 3px !important;*/
+    text-align: center;
+    font-size: 18px;
+    font-weight:bold;
+    width:7%;
+}
+
+.blog-post-content .table-list .song-name-top-downloads{
+    font-size: 16px;
+}
+
+/*top 100 downloads*/
