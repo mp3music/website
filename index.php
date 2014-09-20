@@ -4,14 +4,14 @@ require_once __DIR__ . '/config.php';
 
 $app = new \Slim\Slim();
 
-// MongoDB settings
-$elasticaClient = new \Elastica\Client();
-$type = $elasticaClient->getIndex(ELASTIC_INDEX)->getType(ELASTIC_TYPE);
-
 // Set view settings
 $view = $app->view();
 $view->setTemplatesDirectory(TEMPLATES_DIR);
 
+/**
+ * @param $string
+ * @return mixed|string
+ */
 function urlclean($string)
 {
 	// Clean
@@ -25,60 +25,51 @@ function urlclean($string)
 
 // Main page route
 $app->get('/', function () use ($app) {
-		$app->render('layout.php', ['page' => 'main']);
+		$xml = new SimpleXMLElement(file_get_contents('http://www.billboard.com/rss/charts/hot-100'));
+		$app->render('layout.php', ['page' => 'main', 'results' => $xml->channel[0]->item]);
 	}
 );
 
+
 // Search route
-$app->get('/:query.html', function ($query) use ($app, $type, $elasticaClient) {
+$app->get('/:query.html', function ($query) use ($app) {
 		// Save request
 		$client = new \Sokil\Mongo\Client(MONGO_DSN);
 		$collection = $client->getDatabase(MONGO_DBNAME)->getCollection(MONGO_COLLECTION);
-
-		if(!$collection->find(['request' => $query])) {
+		if (!$collection->find(['request' => $query])->count()) {
 			$collection->insert([
-					'request' => urlclean($query),
-					'created' => new MongoDate(),
-					'status' => 0
-				]);
+				'request' => urlclean($query),
+				'created' => new MongoDate(),
+				'views' => 1
+			]);
+		}
+		else {
+			$collection->getMongoCollection()->update(['request' => $query], ['$inc' => ['views' => 1]]);
 		}
 
-		$response = $elasticaClient->request('songs/songs/_search', \Elastica\Request::GET, array(
-			'query' => array(
-				'query_string' => array(
-					'query' => urlclean($query),
-				)
-			),
-			'sort' => array(
-				'_score' => 'desc',
-				'rating' => 'desc'
-			),
-			'size' => 20
-		))->getData();
+		// Search from Vk or memcache
+		$cache = new memcache();
+		$cache->connect('localhost');
+
+		if(($results = $cache->get($query)) === false) {
+			require_once __DIR__ . '/libs/vk/cloud.php';
+			require_once __DIR__ . '/libs/vk/vkontakte.php';
+
+			$vk = new vkontakte([
+				'query' => $query,
+				'offset' => 0
+			]);
+			$results = $vk->search();
+			$cache->set($query, $results, 0, 3600);
+		}
 
 		$app->render('layout.php', [
-				'page' => 'search',
-				'results' => isset($response['hits']['hits']) ? $response['hits']['hits'] : []
-			]);
+			'page' => 'search',
+			'results' => $results
+		]);
 	}
 )->conditions([
-			'query' => '[а-яёa-z\d\-]{3,}'
-		]);
-
-// Search route
-$app->get('/download/:id', function ($id) use ($app, $type, $elasticaClient) {
-		$response = $elasticaClient->request('songs/songs/' . $id . '', \Elastica\Request::GET, [])->getData();
-
-		if($response['found']) {
-			$elasticaClient->request('songs/songs/' . $id . '/_update', \Elastica\Request::POST, [
-				"script" => "ctx._source.rating += 1"
-			]);
-
-			$app->response()->redirect($response['_source']['link']);
-		}
-
-		$app->response()->setStatus(404);
-	}
-);
+	'query' => '.+'
+]);
 
 $app->run();
