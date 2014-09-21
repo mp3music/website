@@ -25,8 +25,19 @@ function urlclean($string)
 
 // Main page route
 $app->get('/', function () use ($app) {
-		$xml = new SimpleXMLElement(file_get_contents('http://www.billboard.com/rss/charts/hot-100'));
-		$app->render('layout.php', ['page' => 'main', 'results' => $xml->channel[0]->item]);
+		// Search from Vk or memcache
+		$cache = new memcache();
+		$cache->connect('localhost');
+
+		if(($xmlString = $cache->get('top')) === false) {
+			$xmlString = file_get_contents('http://www.billboard.com/rss/charts/hot-100');
+			$cache->set('top', $xmlString, 0, 8600);
+		}
+
+		$xml = new SimpleXMLElement($xmlString);
+		$results = $xml->channel[0]->item;
+
+		$app->render('layout.php', ['page' => 'main', 'results' => $results]);
 	}
 );
 
