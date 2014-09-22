@@ -25,9 +25,6 @@ class vkontakte extends cloud
 	 */
 	public function init()
 	{
-		// clean request
-		$this->_params['query'] = urlclean(urldecode($this->_params['query']), false, ' ');
-
 		// Get random account
 		$logins = file(__DIR__ . '/logins.txt');
 		$accountsCount = count($logins);

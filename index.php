@@ -12,11 +12,11 @@ $view->setTemplatesDirectory(TEMPLATES_DIR);
  * @param $string
  * @return mixed|string
  */
-function urlclean($string)
+function urlclean($string, $delimeter = ' ')
 {
 	// Clean
 	$string = preg_replace('/[^\p{L}\d]/u', ' ', $string);
-	$string = mb_strtolower(preg_replace('/(\s{1})\1*/ui', ' ', trim($string)), 'utf-8');
+	$string = mb_strtolower(preg_replace('/(\s{1})\1*/ui', $delimeter, trim($string)), 'utf-8');
 
 	return $string;
 }
@@ -67,7 +67,7 @@ $app->get('/:query.html', function ($query) use ($app) {
 			require_once __DIR__ . '/libs/vk/vkontakte.php';
 
 			$vk = new vkontakte([
-				'query' => $query,
+				'query' => urlclean($query),
 				'offset' => 0
 			]);
 			$results = $vk->search();
