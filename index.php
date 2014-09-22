@@ -44,12 +44,13 @@ $app->get('/', function () use ($app) {
 
 // Search route
 $app->get('/:query.html', function ($query) use ($app) {
+		$query = urlclean($query);
 		// Save request
 		$client = new \Sokil\Mongo\Client(MONGO_DSN);
 		$collection = $client->getDatabase(MONGO_DBNAME)->getCollection(MONGO_COLLECTION);
-		if (!$collection->find(['request' => $query])->count()) {
+		if (!$collection->find(['request' => c])->count()) {
 			$collection->insert([
-				'request' => urlclean($query),
+				'request' => $query,
 				'created' => new MongoDate(),
 				'views' => 1
 			]);
@@ -67,7 +68,7 @@ $app->get('/:query.html', function ($query) use ($app) {
 			require_once __DIR__ . '/libs/vk/vkontakte.php';
 
 			$vk = new vkontakte([
-				'query' => urlclean($query),
+				'query' => $query,
 				'offset' => 0
 			]);
 			$results = $vk->search();
@@ -76,7 +77,8 @@ $app->get('/:query.html', function ($query) use ($app) {
 
 		$app->render('layout.php', [
 			'page' => 'search',
-			'results' => $results
+			'results' => $results,
+			'query' => $query
 		]);
 	}
 )->conditions([
