@@ -41,10 +41,6 @@
     color: #428BCA;
 }
 
-.list-group-item-custom .list-group-href{
-    font-size:16px;
-}
-
 .list-group-item-custom:hover{
     background-color: #e9edf2;
 }
