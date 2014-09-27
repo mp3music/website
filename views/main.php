@@ -1,4 +1,4 @@
-<div class="panel panel-primary">
+<div class="panel panel-default">
 	<!-- Default panel contents -->
 	<div class="panel-heading panel-title">The hot 100</div>
 	<!-- List group -->
