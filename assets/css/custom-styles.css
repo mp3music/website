@@ -1,3 +1,14 @@
+.logo-block,
+.logo-block:hover{
+    height: 80px;
+    color: #000;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 28px;
+    text-align: center;
+    padding-top: 40px;
+}
+
 .container-custom{
     padding-bottom: 60px;
 }
@@ -50,7 +61,6 @@
 }
 
 .list-group-item.list-group-item-custom > span{
-    float: right;
     font-size:12px;
 }
 
@@ -78,6 +88,15 @@
 
 .list-group-item.glyphicon.glyphicon-music.glyphicon-blue > span{
     color:#3c4bf0;
+}
+
+.jp-type-single{
+    float: right;
+}
+
+.jp-controls.bs-glyphicons-list{
+    list-style: none;
+    text-align: center;
 }
 /*`*/
 /*Content*/
