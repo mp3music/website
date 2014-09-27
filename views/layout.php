@@ -19,12 +19,12 @@
 <body>
 <div class="container container-custom">
 	<div class="row">
-		<a href="/" class="col-lg-2 col-sm-6 col-xs-12 navbar-brand">
+		<a href="#" class="col-lg-2 col-sm-6 col-xs-12 navbar-brand">
 			<img src="/assets/images/logo.jpg">
 		</a>
 		<form class="col-lg-10 col-sm-4 navbar-form navbar-left search-input">
 			<input id="e22" type="text" placeholder="Search..." class="form-control input-text">
-			<button class="btn btn-primary" type="button"><span> Search </span></button>
+			<button class="btn btn-info" type="button"><span> Search </span></button>
 		</form>
 	</div>
 </div>
@@ -67,7 +67,7 @@
 					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
 						<span>Vestibulum at eros</span>
 					</a>
-					<a class="list-group-item glyphicon glyphicon-star glyphicon-blue" href="#">
+					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
 						<span>Morbi leo risus</span>
 					</a>
 					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">

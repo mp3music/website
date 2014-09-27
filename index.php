@@ -60,24 +60,11 @@ $app->get('/:query.html', function ($query) use ($app) {
 		}
 
 		// Search from Vk or memcache
-		$cache = new memcache();
-		$cache->connect('localhost');
-
-		if(($results = $cache->get($query)) === false) {
-			require_once __DIR__ . '/libs/vk/cloud.php';
-			require_once __DIR__ . '/libs/vk/vkontakte.php';
-
-			$vk = new vkontakte([
-				'query' => $query,
-				'offset' => 0
-			]);
-			$results = $vk->search();
-			$cache->set($query, $results, 0, 3600);
-		}
+		$http = new dHttp\Client('http://api.mp3.loc/api/?query=' . urlencode($query) . '&api_key=123');
 
 		$app->render('layout.php', [
 			'page' => 'search',
-			'results' => $results,
+			'results' => json_decode($http->get()->getBody(), true),
 			'query' => $query
 		]);
 	}
