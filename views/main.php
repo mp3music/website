@@ -10,7 +10,7 @@
                 <span class="jp-duration"></span>
                 <div class="jp-type-single">
                     <div class="jp-gui jp-interface">
-                        <ul class="jp-controls bs-glyphicons-list ">
+                        <ul class="jp-controls bs-glyphicons-list list-inline">
                             <li>
                                 <a href="javascript:;" class="jp-play glyphicon glyphicon-play" tabindex="1"></a>
                             </li>
