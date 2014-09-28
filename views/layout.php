@@ -40,17 +40,18 @@
 			<div class="sidebar-module sidebar-archives">
 				<h4 class="label label-info label-info-custom">Archives</h4>
 				<p>
-					mp3cooll.com is an easy way to listen music.
+					mp3cooll.com is an easy way to listen music and download music.
 					You can find your favorite songs in our multimillion database of
 					quality mp3 links. We provide fast and relevant search.
 					You can also post music in your blog or personal site.
 					Hope you enjoy staying here!
 				</p>
 			</div>
-			<div class="sidebar-module sidebar-social">
-				<h4 class="label label-info label-info-custom">Elsewhere</h4>
-				<div class="addthis_native_toolbox"></div>
-			</div>
+<!--            пока это не надо-->
+<!--			<div class="sidebar-module sidebar-social">-->
+<!--				<h4 class="label label-info label-info-custom">Elsewhere</h4>-->
+<!--				<div class="addthis_native_toolbox"></div>-->
+<!--			</div>-->
 
 			<div class="sidebar-module sidebar-now-playing">
 				<h4 class="label label-info label-info-custom">Now Playing</h4>
