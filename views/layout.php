@@ -19,8 +19,8 @@
 <body>
 <div class="container container-custom">
 	<div class="row">
-		<a href="#" class="col-lg-2 col-sm-6 col-xs-12 navbar-brand">
-			<img src="/assets/images/logo.jpg">
+		<a href="/" class="col-lg-2 col-sm-6 col-xs-12 navbar-brand">
+            <abbr class="logo" title="attribute">MP3Cooll</abbr>
 		</a>
 		<form class="col-lg-10 col-sm-4 navbar-form navbar-left search-input" id="search_form">
 			<input id="e22" type="text" placeholder="Search..." class="form-control input-text">

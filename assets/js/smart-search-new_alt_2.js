@@ -1,4 +1,4 @@
-<?php echo $this->partial('header_responsive.phtml'); ?>
+//<?php echo $this->partial('header_responsive.phtml'); ?>
 <div class="page-wrapper">
 	<div class="page-container">
 			<!-- blog container start -->
@@ -245,4 +245,4 @@ function search_term_track()
             SS=SMART_SEARCH('#q', {"hint_keywords":["New Honda","2014 Gray Accord","Service appointment","Coupons","Used Toyota Camry","Black Civic","Hours","Used Gray Camry","Order Parts","Navigation"],"hint_speed":150,"hint_delay":1000});
         })();
     </script>
-<?php echo $this->partial('footer_responsive.phtml'); ?>
+//<?php echo $this->partial('footer_responsive.phtml'); ?>
