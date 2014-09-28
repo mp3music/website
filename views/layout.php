@@ -22,9 +22,9 @@
 		<a href="#" class="col-lg-2 col-sm-6 col-xs-12 navbar-brand">
 			<img src="/assets/images/logo.jpg">
 		</a>
-		<form class="col-lg-10 col-sm-4 navbar-form navbar-left search-input">
+		<form class="col-lg-10 col-sm-4 navbar-form navbar-left search-input" id="search_form">
 			<input id="e22" type="text" placeholder="Search..." class="form-control input-text">
-			<button class="btn btn-info" type="button"><span> Search </span></button>
+			<button class="btn btn-info" type="submit"><span> Search </span></button>
 		</form>
 	</div>
 </div>
@@ -98,6 +98,16 @@
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript">
+$("#search_form").submit(function() {
+	var val = $('#e22').val();
+	
+	if (val.length > 3) {
+		window.location  = '/' + val.replace(/\s/g, "-") + '.html';
+	}
+	return false;
+});
+</script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="/assets/js/bootstrap.min.js"></script>
 <script src="/assets/js/select2.min.js"></script>
