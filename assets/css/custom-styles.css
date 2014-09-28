@@ -50,6 +50,7 @@
 .list-group-item-custom .artist{
     font-size: 14px;
     color: #428BCA;
+    width:85%;
 }
 
 .list-group-item-custom .list-group-href{
@@ -65,8 +66,8 @@
 }
 
 .sidebar-module{
-    border: 1px solid #428BCA;
-    border-top: 3px solid #428BCA;
+    border: 1px solid #C0C0C0;
+    border-top: 3px solid #C0C0C0;
     padding:10px 19px;
     border-radius:4px;
 }
@@ -92,6 +93,8 @@
 
 .jp-type-single{
     float: right;
+    position: relative;
+    top:-10px;
 }
 
 .jp-controls.bs-glyphicons-list{
