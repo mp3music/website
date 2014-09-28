@@ -101,7 +101,7 @@
 <script type="text/javascript">
 $("#search_form").submit(function() {
 	var val = $('#e22').val();
-	
+
 	if (val.length > 3) {
 		window.location  = '/' + val.replace(/\s/g, "-") + '.html';
 	}

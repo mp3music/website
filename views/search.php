@@ -1,4 +1,4 @@
-<script src="/assets/js/jquery.jplayer.min"></script>
+<script src="/assets/js/jquery.jplayer.min.js"></script>
 <div class="panel panel-primary">
 	<!-- Default panel contents -->
 	<div class="panel-heading panel-title">Download <?= $query; ?></div>
