@@ -16,13 +16,10 @@ function urlclean($string, $delimeter = ' ')
 {
 	// Clean
 	$string = preg_replace('/[^\p{L}\d]/u', ' ', $string);
-	$string = mb_strtolower(preg_replace('/(\s{1})\1*/ui', $delimeter, trim($string)), 'utf-8');
-
-	return $string;
+	return  mb_strtolower(preg_replace('/(\s{1})\1*/ui', $delimeter, trim($string)), 'utf-8');
 }
 
 // Set routes
-
 // Main page route
 $app->get('/', function () use ($app) {
 		// Search from Vk or memcache
@@ -40,7 +37,6 @@ $app->get('/', function () use ($app) {
 		$app->render('layout.php', ['page' => 'main', 'results' => $results]);
 	}
 );
-
 
 // Search route
 $app->get('/:query.html', function ($query) use ($app) {
