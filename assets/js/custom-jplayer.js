@@ -1,7 +1,7 @@
 $(document).ready(function() {
     var mediaPlayer = jQuery('.jpId');
     mediaPlayer.jPlayer({
-        swfPath: '/swf/Jplayer.swf',
+        swfPath: '/asset/Jplayer.swf',
         solution:    "flash, html",
         supplied : 'mp3, oga, wav',
         cssSelector: {
@@ -9,7 +9,7 @@ $(document).ready(function() {
             pause: '.jp-pause'
         },
         ready: function() {jQuery(this).jPlayer("setMedia", {
-            mp3: '../mp3/burito_feat_yolka_-_ty_znaesh_(zaycev.net).mp3',
+            mp3: '/mp3/burito_feat_yolka_-_ty_znaesh_(zaycev.net).mp3',
             oga: '/audio/track.oga',
             wav: '/audio/track.wav'
         });}
