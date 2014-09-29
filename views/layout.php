@@ -53,7 +53,7 @@
 					<?php $artists = randomArtists(20); ?>
 					<?php foreach ($artists as $artst) : ?>
 						<li>
-							<a href="#">
+							<a href="/<?= urlclean($artst, '-'); ?>.html">
 								<?= $artst; ?>
 							</a>
 						</li>
