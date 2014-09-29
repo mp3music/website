@@ -1,7 +1,7 @@
 <script src="/assets/js/jquery.jplayer.min.js"></script>
-<div class="panel panel-primary">
+<div class="panel panel-default">
 	<!-- Default panel contents -->
-	<div class="panel-heading panel-title">Download <?= $query; ?></div>
+	<div class="panel-heading panel-title">Download <?= $query; ?> mp3</div>
 	<!-- List group -->
 	<ul class="list-group">
 		<?php foreach($results['result'] as $item) : ?>
