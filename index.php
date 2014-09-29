@@ -1,23 +1,13 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/functions.php';
 
 $app = new \Slim\Slim();
 
 // Set view settings
 $view = $app->view();
 $view->setTemplatesDirectory(TEMPLATES_DIR);
-
-/**
- * @param $string
- * @return mixed|string
- */
-function urlclean($string, $delimeter = ' ')
-{
-	// Clean
-	$string = preg_replace('/[^\p{L}\d]/u', ' ', $string);
-	return  mb_strtolower(preg_replace('/(\s{1})\1*/ui', $delimeter, trim($string)), 'utf-8');
-}
 
 // Set routes
 // Main page route
