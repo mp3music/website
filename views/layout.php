@@ -49,41 +49,16 @@
 			</div>
 			<div class="sidebar-module sidebar-now-playing">
 				<div class="label label-info label-info-custom">Users search</div>
-				<div class="list-group">
-					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						I am Over You Tamar Braxton
-					</a>
-					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						Vestibulum at eros
-					</a>
-					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						Link mp3 music
-					</a>
-					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						Vestibulum at eros
-					</a>
-					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						Morbi leo risus
-					</a>
-					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						Link mp3 music
-					</a>
-					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						Dapibus ac facilisis in
-					</a>
-					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						Link mp3 music
-					</a>
-					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						Dapibus ac facilisis in
-					</a>
-					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						Link mp3 music
-					</a>
-					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						Link mp3 music
-					</a>
-				</div>
+				<ul class="list-inline">
+					<?php $artists = randomArtists(20); ?>
+					<?php foreach ($artists as $artst) : ?>
+						<li>
+							<a href="#">
+								<?= $artst; ?>
+							</a>
+						</li>
+					<?php endforeach; ?>
+				</ul>
 			</div>
 		</div><!-- /.blog-sidebar -->
 	</div>
