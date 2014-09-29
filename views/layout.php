@@ -38,7 +38,6 @@
 
 		<div class="col-sm-4 col-xs-12 blog-sidebar">
 			<div class="sidebar-module sidebar-archives">
-				<h4 class="label label-info label-info-custom">Archives</h4>
 				<p>
 					mp3cooll.com is an easy way to listen music and download music.
 					You can find your favorite songs in our multimillion database of
@@ -47,50 +46,43 @@
 					Hope you enjoy staying here!
 				</p>
 			</div>
-<!--            пока это не надо-->
-<!--			<div class="sidebar-module sidebar-social">-->
-<!--				<h4 class="label label-info label-info-custom">Elsewhere</h4>-->
-<!--				<div class="addthis_native_toolbox"></div>-->
-<!--			</div>-->
-
 			<div class="sidebar-module sidebar-now-playing">
-				<h4 class="label label-info label-info-custom">Now Playing</h4>
+				<div class="label label-info label-info-custom">Users search</div>
 				<div class="list-group">
 					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						<span>Porta ac consectetur ac</span>
+						I am Over You Tamar Braxton
 					</a>
 					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						<span>Vestibulum at eros</span>
+						Vestibulum at eros
 					</a>
 					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						<span>Link mp3 music</span>
+						Link mp3 music
 					</a>
 					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						<span>Vestibulum at eros</span>
+						Vestibulum at eros
 					</a>
 					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						<span>Morbi leo risus</span>
+						Morbi leo risus
 					</a>
 					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						<span>Link mp3 music</span>
+						Link mp3 music
 					</a>
 					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						<span>Dapibus ac facilisis in</span>
+						Dapibus ac facilisis in
 					</a>
 					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						<span>Link mp3 music</span>
+						Link mp3 music
 					</a>
 					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						<span>Dapibus ac facilisis in</span>
+						Dapibus ac facilisis in
 					</a>
 					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						<span>Link mp3 music</span>
+						Link mp3 music
 					</a>
 					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						<span>Link mp3 music</span>
+						Link mp3 music
 					</a>
 				</div>
-				<a class="link-more" href="#">More</a>
 			</div>
 		</div><!-- /.blog-sidebar -->
 	</div>
