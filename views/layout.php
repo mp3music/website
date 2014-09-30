@@ -19,7 +19,7 @@
 <body>
 <div class="container container-custom">
 	<div class="row">
-		<a href="#" class="col-lg-2 col-sm-6 col-xs-12 logo-block navbar-brand">
+		<a href="/" class="col-lg-2 col-sm-6 col-xs-12 logo-block navbar-brand">
 			<span class="logo" title="attribute">MP3Cooll</span>
 			<!--<img src="/assets/images/logo.jpg">-->
 		</a>
