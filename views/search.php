@@ -7,9 +7,7 @@
 		<?php foreach($results['result'] as $item) : ?>
 			<li class="list-group-item list-group-item-custom">
                 <div id="jp_container_1" class="jp-audio">
-                    <a href="<?= $item['url']; ?>" download="true"><?= $item['artist']['name']; ?><br><strong><?= $item['title']; ?></strong></a>
-    <!--				-<span>--><?//= $item['duration']; ?><!--</span>-->
-                    <span class="jp-duration"></span>
+                   <strong><?= $item['title']; ?></strong> <br><?= $item['artist']['name']; ?>&nbsp;&nbsp;(<?= $item['duration']; ?>)
                     <div class="jp-type-single">
                         <div class="jp-gui jp-interface">
                             <ul class="jp-controls bs-glyphicons-list list-inline">
@@ -19,7 +17,9 @@
                                 <li>
                                     <a href="javascript:;" class="jp-pause glyphicon glyphicon-pause" tabindex="1"></a>
                                 </li>
-                                <li class="glyphicon glyphicon-download-alt download-button"></li>
+                                <li>
+	                                <a class="glyphicon glyphicon-download-alt" href="<?= $item['url']; ?>" download="true"></a>
+                                </li>
                             </ul>
                         </div>
                     </div>
