@@ -19,8 +19,9 @@
 <body>
 <div class="container container-custom">
 	<div class="row">
-		<a href="/" class="col-lg-2 col-sm-6 col-xs-12 navbar-brand">
-            <abbr class="logo" title="attribute">MP3Cooll</abbr>
+		<a href="#" class="col-lg-2 col-sm-6 col-xs-12 logo-block navbar-brand">
+			<span class="logo" title="attribute">MP3Cooll</span>
+			<!--<img src="/assets/images/logo.jpg">-->
 		</a>
 		<form class="col-lg-10 col-sm-4 navbar-form navbar-left search-input" id="search_form">
 			<input id="e22" type="text" placeholder="Search..." class="form-control input-text">
@@ -38,7 +39,6 @@
 
 		<div class="col-sm-4 col-xs-12 blog-sidebar">
 			<div class="sidebar-module sidebar-archives">
-				<h4 class="label label-info label-info-custom">Archives</h4>
 				<p>
 					mp3cooll.com is an easy way to listen music and download music.
 					You can find your favorite songs in our multimillion database of
@@ -47,50 +47,18 @@
 					Hope you enjoy staying here!
 				</p>
 			</div>
-<!--            пока это не надо-->
-<!--			<div class="sidebar-module sidebar-social">-->
-<!--				<h4 class="label label-info label-info-custom">Elsewhere</h4>-->
-<!--				<div class="addthis_native_toolbox"></div>-->
-<!--			</div>-->
-
 			<div class="sidebar-module sidebar-now-playing">
-				<h4 class="label label-info label-info-custom">Now Playing</h4>
-				<div class="list-group">
-					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						<span>Porta ac consectetur ac</span>
-					</a>
-					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						<span>Vestibulum at eros</span>
-					</a>
-					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						<span>Link mp3 music</span>
-					</a>
-					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						<span>Vestibulum at eros</span>
-					</a>
-					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						<span>Morbi leo risus</span>
-					</a>
-					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						<span>Link mp3 music</span>
-					</a>
-					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						<span>Dapibus ac facilisis in</span>
-					</a>
-					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						<span>Link mp3 music</span>
-					</a>
-					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						<span>Dapibus ac facilisis in</span>
-					</a>
-					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						<span>Link mp3 music</span>
-					</a>
-					<a class="list-group-item glyphicon glyphicon-music glyphicon-blue" href="#">
-						<span>Link mp3 music</span>
-					</a>
-				</div>
-				<a class="link-more" href="#">More</a>
+				<div class="label label-info label-info-custom">Users search</div>
+				<ul class="list-inline">
+					<?php $artists = randomArtists(20); ?>
+					<?php foreach ($artists as $artst) : ?>
+						<li>
+							<a href="/<?= urlclean($artst, '-'); ?>.html">
+								<?= $artst; ?>
+							</a>
+						</li>
+					<?php endforeach; ?>
+				</ul>
 			</div>
 		</div><!-- /.blog-sidebar -->
 	</div>
@@ -101,7 +69,7 @@
 <script type="text/javascript">
 $("#search_form").submit(function() {
 	var val = $('#e22').val();
-	
+
 	if (val.length > 3) {
 		window.location  = '/' + val.replace(/\s/g, "-") + '.html';
 	}
