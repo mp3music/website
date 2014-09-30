@@ -34,7 +34,7 @@ $app->get('/:query.html', function ($query) use ($app) {
 		// Save request
 		$client = new \Sokil\Mongo\Client(MONGO_DSN);
 		$collection = $client->getDatabase(MONGO_DBNAME)->getCollection(MONGO_COLLECTION);
-		if (!$collection->find(['request' => c])->count()) {
+		if (!$collection->find(['request' => $query])->count()) {
 			$collection->insert([
 				'request' => $query,
 				'created' => new MongoDate(),
