@@ -10,6 +10,7 @@
                     <a href="<?= $item['url']; ?>" download="true"><?= $item['artist']['name']; ?><br><strong><?= $item['title']; ?></strong></a>
     <!--				-<span>--><?//= $item['duration']; ?><!--</span>-->
                     <span class="jp-duration"></span>
+                    <div class="download-button glyphicon glyphicon-download-alt download-button"></div>
                     <div class="jp-type-single">
                         <div class="jp-gui jp-interface">
                             <ul class="jp-controls bs-glyphicons-list list-inline">

@@ -101,5 +101,11 @@
     list-style: none;
     text-align: center;
 }
+
+.download-button{
+    float: right;
+    padding-left: 22px;
+    top:-3px;
+}
 /*`*/
 /*Content*/
