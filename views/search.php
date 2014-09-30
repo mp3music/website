@@ -18,7 +18,7 @@
                                     <a href="javascript:;" class="jp-pause glyphicon glyphicon-pause" tabindex="1"></a>
                                 </li>
                                 <li>
-	                                <a class="glyphicon glyphicon-download-alt" href="<?= $item['url']; ?>" download="true"></a>
+	                                <a class="glyphicon glyphicon-download-alt" href="<?= $item['url']; ?>" download="<?= urlclean($item['title'] .'-' . $item['artist']['name'], '-'); ?>.mp3" filename="<?= urlclean($item['title'] .'-' . $item['artist']['name'], '-'); ?>.mp3"></a>
                                 </li>
                             </ul>
                         </div>
