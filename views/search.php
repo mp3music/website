@@ -1,4 +1,3 @@
-<script src="/assets/js/jquery.jplayer.min.js"></script>
 <div class="panel panel-default">
 	<!-- Default panel contents -->
 	<div class="panel-heading panel-title">Download <?= $query; ?> mp3</div>
@@ -12,7 +11,7 @@
                         <div class="jp-gui jp-interface">
                             <ul class="jp-controls bs-glyphicons-list list-inline">
                                 <li>
-                                    <a href="javascript:;" class="jp-play glyphicon glyphicon-play" tabindex="1"></a>
+                                    <a class="jp-play glyphicon glyphicon-play voice" tabindex="1" href="<?= $item['url']; ?>"></a>
                                 </li>
                                 <li>
                                     <a href="javascript:;" class="jp-pause glyphicon glyphicon-pause" tabindex="1"></a>
