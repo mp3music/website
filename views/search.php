@@ -13,7 +13,6 @@
                             <ul class="jp-controls bs-glyphicons-list list-inline">
                                 <li>
                                     <a class="jp-play glyphicon glyphicon-play" tabindex="1" href="<?= $item['url']; ?>"></a>
-	                                <a class="jp-pause glyphicon glyphicon-pause" tabindex="1"></a>
                                 </li>
                                 <li>
 	                                <a class="glyphicon glyphicon-download-alt" href="/dl.php?link=<?= urlencode($item['url']); ?>&name=<?= urlclean($item['title'] .'-' . $item['artist'], '-'); ?>.mp3"></a>
