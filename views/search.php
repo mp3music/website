@@ -3,10 +3,11 @@
 	<div class="panel-heading panel-title">Download <?= $query; ?> mp3</div>
 	<!-- List group -->
 	<ul class="list-group">
-		<?php foreach($results['result'] as $item) : ?>
+		<?php unset($results['response'][0]); ?>
+		<?php foreach($results['response'] as $item) : ?>
 			<li class="list-group-item list-group-item-custom">
                 <div id="jp_container_1" class="jp-audio">
-                   <strong><?= $item['title']; ?></strong> <br><?= $item['artist']['name']; ?>&nbsp;&nbsp;(<?= $item['duration']; ?>)
+                   <strong class="track_title"><?= $item['title']; ?></strong> <br><span class="artist_name"><?= $item['artist']; ?></span>&nbsp;&nbsp;<span class="duration">(<?= gmdate("i:s", $item['duration']);?>)</span>
                     <div class="jp-type-single">
                         <div class="jp-gui jp-interface">
                             <ul class="jp-controls bs-glyphicons-list list-inline">
@@ -17,7 +18,7 @@
                                     <a href="javascript:;" class="jp-pause glyphicon glyphicon-pause" tabindex="1"></a>
                                 </li>
                                 <li>
-	                                <a class="glyphicon glyphicon-download-alt" href="/dl.php?link=<?= urlencode($item['url']); ?>&name=<?= urlclean($item['title'] .'-' . $item['artist']['name'], '-'); ?>.mp3"></a>
+	                                <a class="glyphicon glyphicon-download-alt" href="/dl.php?link=<?= urlencode($item['url']); ?>&name=<?= urlclean($item['title'] .'-' . $item['artist'], '-'); ?>.mp3"></a>
                                 </li>
                             </ul>
                         </div>

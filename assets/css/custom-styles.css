@@ -1,5 +1,6 @@
 body {
     color: #5f5f5f;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
 .logo-block,
 .logo-block:hover{
@@ -112,3 +113,14 @@ body {
 }
 /*`*/
 /*Content*/
+.artist_name {
+    color: #266384;
+}
+.track_title {
+    color: #355a73;
+    font-size: 16px;
+}
+.duration {
+    color: #999999;
+    font-size: 13px;
+}
