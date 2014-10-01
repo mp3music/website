@@ -63,9 +63,11 @@
 		</div><!-- /.blog-sidebar -->
 	</div>
 </div>
-
+<div id="jquery_jplayer"></div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="/assets/js/jquery.jplayer.min.js"></script>
+<script src="/assets/js/custom-jplayer.js"></script>
 <script type="text/javascript">
 $("#search_form").submit(function() {
 	var val = $('#e22').val();
@@ -75,6 +77,7 @@ $("#search_form").submit(function() {
 	}
 	return false;
 });
+
 </script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="/assets/js/bootstrap.min.js"></script>

@@ -46,11 +46,20 @@ $app->get('/:query.html', function ($query) use ($app) {
 		}
 
 		// Search from Vk or memcache
-		$http = new dHttp\Client('http://api.mp3.loc/api/?query=' . urlencode($query) . '&api_key=123');
+		$cache = new memcache();
+		$cache->connect('localhost');
+
+		// Поиск в ВК и отправка пользователю
+		if(($results = $cache->get($query)) === false) {
+			// Search from Vk or memcache
+			$http = new dHttp\Client('https://api.vk.com/method/audio.search.json?access_token=096fb2d19fc28da6694e9db15f47ff9561c36628f5485fbcd642f7edc6185ea413ab2f2fa4a5c1789cb79&q=' . urlencode($query));
+			$results = json_decode($http->get()->getBody(), true);
+			$cache->set($query, json_decode($http->get()->getBody(), true), 0, 72000);
+		}
 
 		$app->render('layout.php', [
 			'page' => 'search',
-			'results' => json_decode($http->get()->getBody(), true),
+			'results' => $results,
 			'query' => $query
 		]);
 	}
