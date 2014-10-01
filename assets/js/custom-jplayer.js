@@ -6,15 +6,12 @@ $(document).ready(function(){
         solution: "flash, html"
     });
 
-    $('.voice').click(function(e) {
+    $('.jp-play').click(function(e) {
         e.preventDefault();
         $("#jquery_jplayer")
-            .jPlayer("setMedia", {mp3: this.href })
+            .jPlayer("setMedia", {mp3: this.href }).jPlayer('play')
     });
 
-    $('.jp-play').click(function() {
-        $('#jquery_jplayer').jPlayer('play');
-    });
     $('.jp-pause').click(function() {
         $('#jquery_jplayer').jPlayer('pause');
     });
