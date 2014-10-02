@@ -47,6 +47,18 @@
 					Hope you enjoy staying here!
 				</p>
 			</div>
+			<div style="width:310px; margin-top:20px; text-align:right; padding-left:2px;">
+				<g:plusone size="medium"></g:plusone>
+				<script type="text/javascript">
+					(function() {
+						var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+						po.src = 'https://apis.google.com/js/plusone.js';
+						var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+					})();
+				</script>
+				<iframe src="http://www.facebook.com/plugins/like.php?app_id=221027461249362&amp;href=http://mp3cooll.com<?= $_SERVER['REQUEST_URI'];?>&amp;send=false&amp;layout=button_count&amp;width=95&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:85px; height:21px; margin-right:8px;" allowTransparency="true"></iframe>
+				<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="mp3cooll.com">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+			</div>
 			<div class="sidebar-module sidebar-now-playing">
 				<div class="label label-info label-info-custom">Users search</div>
 				<ul class="list-inline">
@@ -66,8 +78,8 @@
 <div id="jquery_jplayer"></div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="/assets/js/jquery.jplayer.min.js"></script>
-<script src="/assets/js/custom-jplayer.js"></script>
+<script src="/assets/js/soundmanager2.js"></script>
+<script src="/assets/js/mp3-player-button.js"></script>
 <script type="text/javascript">
 $("#search_form").submit(function() {
 	var val = $('#e22').val();
@@ -77,7 +89,10 @@ $("#search_form").submit(function() {
 	}
 	return false;
 });
-
+soundManager.setup({
+	useFlashBlock: true, // optional - if used, required flashblock.css
+	url: '/assets/js/swf/' // required: path to directory containing SM2 SWF files
+});
 </script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="/assets/js/bootstrap.min.js"></script>
