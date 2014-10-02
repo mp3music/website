@@ -17,12 +17,12 @@ $app->get('/', function () use ($app) {
 		$cache->connect('localhost');
 
 		if(($xmlString = $cache->get('top')) === false) {
-			$xmlString = file_get_contents('http://www.billboard.com/rss/charts/hot-100');
+			$xmlString = file_get_contents('http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=30/xml');
 			$cache->set('top', $xmlString, 0, 8600);
 		}
 
 		$xml = new SimpleXMLElement($xmlString);
-		$results = $xml->channel[0]->item;
+		$results = $xml->entry;
 
 		$app->render('layout.php', ['page' => 'main', 'results' => $results]);
 	}
