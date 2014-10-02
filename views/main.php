@@ -1,6 +1,6 @@
 <div class="panel panel-default">
 	<!-- Default panel contents -->
-	<div class="panel-heading panel-title">The hot 100</div>
+	<h1 class="panel-heading panel-title">Most popular mp3</h1>
 	<!-- List group -->
 	<ul class="list-group">
 		<?php foreach($results as $item) : ?>

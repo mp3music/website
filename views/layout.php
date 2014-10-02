@@ -17,11 +17,19 @@
 	<![endif]-->
 </head>
 <body>
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-55375266-1', 'auto');
+	ga('send', 'pageview');
+</script>
 <div class="container container-custom">
 	<div class="row">
 		<a href="/" class="col-lg-2 col-sm-6 col-xs-12 logo-block navbar-brand">
-			<span class="logo" title="attribute">MP3Cooll</span>
-			<!--<img src="/assets/images/logo.jpg">-->
+			<span class="logo" title="Free mp3 download">MP3Cooll</span>
 		</a>
 		<form class="col-lg-10 col-sm-4 navbar-form navbar-left search-input" id="search_form">
 			<input id="e22" type="text" placeholder="Search..." class="form-control input-text">
@@ -40,10 +48,9 @@
 		<div class="col-sm-4 col-xs-12 blog-sidebar">
 			<div class="sidebar-module sidebar-archives">
 				<p>
-					mp3cooll.com is an easy way to listen music and download music.
+					mp3cooll.com is an easy way to listen music and download mp3.
 					You can find your favorite songs in our multimillion database of
 					quality mp3 links. We provide fast and relevant search.
-					You can also post music in your blog or personal site.
 					Hope you enjoy staying here!
 				</p>
 			</div>
@@ -96,7 +103,5 @@ soundManager.setup({
 </script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="/assets/js/bootstrap.min.js"></script>
-<script src="/assets/js/select2.min.js"></script>
-<script src="/assets/js/searchsuggestion.js"></script>
 </body>
 </html>
