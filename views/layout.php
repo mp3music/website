@@ -66,7 +66,7 @@
 			</div>
 
 			<div class="sidebar-module sidebar-now-playing">
-				<div class="label label-info label-info-custom">Users search</div>
+				<div class="label label-info label-info-custom">Top singers</div>
 				<ul class="list-inline">
 					<?php $artists = randomArtists(20); ?>
 					<?php foreach ($artists as $artist) : ?>

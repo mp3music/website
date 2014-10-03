@@ -11,6 +11,23 @@ function urlclean($string, $delimeter = ' ')
 }
 
 /**
+ * Cut string by limit
+ *
+ * @param string $string
+ * @param int $limit
+ * @param boolean $points
+ * @return string
+ */
+function s($string, $limit = 34, $points = true)
+{
+	if (mb_strlen($string) < $limit) {
+		return $string;
+	}
+
+	return mb_substr($string, 0, $limit, 'utf-8') . ($points ? '...' : '');
+}
+
+/**
  * @param $limit
  * @return array
  */
