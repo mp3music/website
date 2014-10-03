@@ -61,7 +61,7 @@ $app->get('/:query.html', function ($query) use ($app) {
 			'page' => 'search',
 			'results' => $results,
 			'query' => $query,
-			'title' => $query . ' download mp3 music'
+			'title' => ucwords($query) . ' download mp3 music'
 		]);
 	}
 )->conditions([
