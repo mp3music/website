@@ -32,9 +32,9 @@ $app->get('/', function () use ($app) {
 $app->get('/:query.html', function ($query) use ($app) {
 		$query = urlclean($query);
 		// Save request
-		$client = new \Sokil\Mongo\Client(MONGO_DSN);
-		$collection = $client->getDatabase(MONGO_DBNAME)->getCollection(MONGO_COLLECTION);
-		if (!$collection->find(['request' => $query])->count()) {
+		$client = new MongoClient(MONGO_DSN);
+		$collection = $client->selectDB(MONGO_DBNAME)->selectCollection(MONGO_COLLECTION);
+		if ($collection->find(['request' => $query])) {
 			$collection->insert([
 				'request' => $query,
 				'created' => new MongoDate(),
@@ -42,7 +42,7 @@ $app->get('/:query.html', function ($query) use ($app) {
 			]);
 		}
 		else {
-			$collection->getMongoCollection()->update(['request' => $query], ['$inc' => ['views' => 1]]);
+			$collection->update(['request' => $query], ['$inc' => ['views' => 1]]);
 		}
 
 		// Search from Vk or memcache
