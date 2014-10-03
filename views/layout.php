@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>MP3 Cooll</title>
+	<title><?= $title; ?></title>
 	<!-- Bootstrap -->
 	<link href="/assets/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/assets/css/custom-styles.css" rel="stylesheet">
@@ -64,14 +64,15 @@
 				<iframe src="http://www.facebook.com/plugins/like.php?app_id=221027461249362&amp;href=http://mp3cooll.com<?= $_SERVER['REQUEST_URI'];?>&amp;send=false&amp;layout=button_count&amp;width=95&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:85px; height:21px; margin-right:8px;" allowTransparency="true"></iframe>
 				<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="mp3cooll.com">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 			</div>
+
 			<div class="sidebar-module sidebar-now-playing">
-				<div class="label label-info label-info-custom">Users search</div>
+				<div class="label label-info label-info-custom">Top singers</div>
 				<ul class="list-inline">
 					<?php $artists = randomArtists(20); ?>
-					<?php foreach ($artists as $artst) : ?>
+					<?php foreach ($artists as $artist) : ?>
 						<li>
-							<a href="/<?= urlclean($artst, '-'); ?>.html">
-								<?= $artst; ?>
+							<a href="/<?= urlclean($artist, '-'); ?>.html">
+								<?= $artist; ?>
 							</a>
 						</li>
 					<?php endforeach; ?>

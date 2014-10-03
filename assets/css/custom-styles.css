@@ -14,7 +14,7 @@ body {
 }
 
 .container-custom{
-    padding-bottom: 50px;
+    padding-bottom: 45px;
 }
 
 .search-input{
@@ -109,8 +109,8 @@ body {
 .download-button{
     position:relative;
     display:inline-block; /* If you worry about old browser bugs, Firefox 2 might not like this and may need -moz-inline-box instead. :D */
-    width:18px;
-    height:18px;
+    width:22px;
+    height:22px;
     text-indent:-9999px; /* don't show link text */
     overflow:hidden; /* don't draw inner link text */
     vertical-align:middle;
@@ -130,7 +130,7 @@ body {
     background-color:#6195af;
     background-image:url(/assets/images/download.png);
     background-repeat:no-repeat;
-    background-position:5px 50%;
+    background-position:7px 50%;
 }
 /*`*/
 /*Content*/
@@ -148,8 +148,8 @@ body {
 a.sm2_button {
     position:relative;
     display:inline-block; /* If you worry about old browser bugs, Firefox 2 might not like this and may need -moz-inline-box instead. :D */
-    width:18px;
-    height:18px;
+    width:22px;
+    height:22px;
     text-indent:-9999px; /* don't show link text */
     overflow:hidden; /* don't draw inner link text */
     vertical-align:middle;
@@ -180,8 +180,8 @@ a.sm2_button.sm2_paused:hover {
     background-size: 9px 10px;
     *background-image:url(/assets/images/arrow-right-white.png); /* IE 6+7 don't do DATA: URIs */
     background-repeat:no-repeat;
-    background-position:5px 50%;
-    *background-position:5px 4px; /* IE 6 again */
+    background-position:7px 50%;
+    *background-position:7px 4px; /* IE 6 again */
 }
 a.sm2_button:hover,
 a.sm2_button.sm2_playing,

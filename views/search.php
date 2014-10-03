@@ -8,7 +8,7 @@
 			<?php $downloadUrl = '/dl.php?link=' . urlencode($item['url']) . '&name=' . urlclean($item['title'] .'-' . $item['artist'], '-') . '.mp3'; ?>
 			<li class="list-group-item list-group-item-custom">
                 <div id="jp_container_1" class="jp-audio">
-                   <strong class="track_title"><?= $item['title']; ?></strong> <br><span class="artist_name"><?= $item['artist']; ?></span>&nbsp;&nbsp;<span class="duration">(<?= gmdate("i:s", $item['duration']);?>)</span>
+                   <strong class="track_title"><?= s($item['title'], 70); ?></strong> <br><span class="artist_name"><?= s($item['artist'], 70); ?></span>&nbsp;&nbsp;<span class="duration">(<?= gmdate("i:s", $item['duration']);?>)</span>
                     <div class="jp-type-single">
                         <div class="jp-gui jp-interface">
                             <ul class="jp-controls bs-glyphicons-list list-inline">
