@@ -31,7 +31,7 @@ function BasicMP3Player() {
 
   this.config = {
     // configuration options
-    playNext: false, // stop after one sound, or play through list until end
+    playNext: true, // stop after one sound, or play through list until end
     autoPlay: false  // start playing the first sound right away
   };
 
