@@ -66,10 +66,19 @@ function randomArtists($limit = 10)
 		'Lee Brice',
 		'Sam Hunt',
 		'Bobby Shmurda',
-		'One Direction'
+		'One Direction',
+		'Jessie J',
+		'George Strait',
+		'Justin Bieber',
+		'Joe Bonamassa',
+		'Rita Ora',
+		'Fall Out Boy',
+		'Jennifer Hudson',
+		'Rae Sremmurd',
+		'Demi Lovato',
+		'Lorde'
 	];
 
 	shuffle($artists);
-
 	return array_slice($artists, 0, $limit);
 }
