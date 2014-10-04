@@ -123,7 +123,9 @@ function randomArtists($limit = 10)
 		'Rae Sremmurd',
 		'Demi Lovato',
 		'Lorde',
-		'Enrique Iglesias'
+		'Enrique Iglesias',
+		'Michael Jackson',
+		'Pitbull'
 	];
 
 	shuffle($artists);
