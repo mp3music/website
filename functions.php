@@ -28,6 +28,35 @@ function s($string, $limit = 34, $points = true)
 }
 
 /**
+ * @param int $limit
+ * @return array
+ */
+function getLastQueries($limit = 10)
+{
+	// Search from Vk or memcache
+	$cache = new memcache();
+	$cache->connect('localhost');
+	$key = __FUNCTION__;
+
+	if(($return = $cache->get($key)) === false) {
+		// Save request
+		$client = new MongoClient(MONGO_DSN);
+		$collection = $client->selectDB(MONGO_DBNAME)->selectCollection(MONGO_COLLECTION);
+
+		$results = $collection->find()->sort(['created' => -1])->limit($limit);
+		$return = [];
+		foreach($results as $item) {
+			$return[] = $item['request'];
+		}
+
+		$cache->set($key, $return, 0, 60);
+	}
+
+
+	return $return;
+}
+
+/**
  * @param $limit
  * @return array
  */
