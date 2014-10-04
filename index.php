@@ -52,16 +52,16 @@ $app->get('/:query.html', function ($query) use ($app) {
 		// Поиск в ВК и отправка пользователю
 		if(($results = $cache->get($query)) === false) {
 			// Search from Vk or memcache
-			$http = new dHttp\Client('https://api.vk.com/method/audio.search.json?access_token=096fb2d19fc28da6694e9db15f47ff9561c36628f5485fbcd642f7edc6185ea413ab2f2fa4a5c1789cb79&q=' . urlencode($query) . '&lyrics=1&count=30&sort=2');
+			$http = new dHttp\Client('https://api.vk.com/method/audio.search.json?access_token=096fb2d19fc28da6694e9db15f47ff9561c36628f5485fbcd642f7edc6185ea413ab2f2fa4a5c1789cb79&q=' . urlencode($query) . '&count=30&sort=2');
 			$results = json_decode($http->get()->getBody(), true);
-			$cache->set($query, json_decode($http->get()->getBody(), true), 0, 72000);
+			$cache->set($query, $results, 0, 72000);
 		}
 
 		$app->render('layout.php', [
 			'page' => 'search',
 			'results' => $results,
 			'query' => $query,
-			'title' => ucwords($query) . ' download mp3 music'
+			'title' => ucwords($query) . ' download mp3 music | Mp3Cooll.com'
 		]);
 	}
 )->conditions([

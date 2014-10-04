@@ -71,7 +71,7 @@
 				<p>
 					mp3cooll.com is an easy way to listen music and download mp3.
 					You can find your favorite songs in our multimillion database of
-					quality mp3 links. We provide fast and relevant search.
+					quality mp3 links. Download free mp3 songs on your android or iPhone devices. We provide fast and relevant search.
 					Hope you enjoy staying here!
 				</p>
 			</div>
@@ -122,7 +122,8 @@
 	$("#search_form").submit(function () {
 		var val = $('#e22').val();
 		if (val.length > 3) {
-			window.location = '/' + val.replace(/\s/g, "-") + '.html';
+			val = val.replace(/[\s\.\!\@\#\$\%\^\&\*\(\)\\\}\]\{\[\'\"\;\:]/g, "-").toLowerCase();
+			window.location = '/' + val.replace(/--/g, "-") + '.html';
 		}
 		return false;
 	});
