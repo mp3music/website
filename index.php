@@ -24,7 +24,7 @@ $app->get('/', function () use ($app) {
 		$xml = new SimpleXMLElement($xmlString);
 		$results = $xml->entry;
 
-		$app->render('layout.php', ['page' => 'main', 'results' => $results, 'title' => 'Mp3Cooll.com - Mp3 free download | Quick Search music | Download music for free - mp3cooll.com']);
+		$app->render('layout.php', ['page' => 'main', 'results' => $results, 'title' => 'Mp3 free download | Quick Search music | Download music for free']);
 	}
 );
 

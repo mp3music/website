@@ -5,7 +5,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title><?= $title; ?></title>
-	<!-- Bootstrap -->
 	<link href="/assets/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/assets/css/custom-styles.css" rel="stylesheet">
 	<!--[if lt IE 9]>
@@ -15,10 +14,17 @@
 </head>
 <body>
 <script>
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	(function (i, s, o, g, r, a, m) {
+		i['GoogleAnalyticsObject'] = r;
+		i[r] = i[r] || function () {
+			(i[r].q = i[r].q || []).push(arguments)
+		}, i[r].l = 1 * new Date();
+		a = s.createElement(o),
+			m = s.getElementsByTagName(o)[0];
+		a.async = 1;
+		a.src = g;
+		m.parentNode.insertBefore(a, m)
+	})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
 	ga('create', 'UA-55375266-1', 'auto');
 	ga('send', 'pageview');
@@ -28,6 +34,7 @@
 		<a href="/" class="col-lg-2 col-sm-6 col-xs-12 logo-block navbar-brand">
 			<span class="logo" title="Free mp3 download">MP3Cooll</span>
 		</a>
+
 		<form class="col-lg-10 col-sm-4 navbar-form navbar-left search-input" id="search_form">
 			<input id="e22" type="text" placeholder="Search..." class="form-control input-text">
 			<button class="btn btn-info" type="submit"><span> Search </span></button>
@@ -39,8 +46,25 @@
 		<div class="col-sm-8 col-xs-12 blog-main">
 			<div class="blog-post blog-post-content">
 				<?= $this->render($page . '.php'); ?>
-			</div><!-- /.blog-post -->
-		</div><!-- /.blog-main -->
+			</div>
+			<!-- /.blog-post -->
+
+			<div class="sidebar-module sidebar-now-playing">
+				<div class="label label-info label-info-custom">Users search</div>
+				<ul class="list-inline">
+					<?php $requests = getLastQueries(); ?>
+					<?php foreach ($requests as $request) : ?>
+						<li>
+							<a href="/<?= urlclean($request, '-'); ?>.html">
+								<?= $request; ?>
+							</a>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+			</div>
+			<br>
+		</div>
+		<!-- /.blog-main -->
 
 		<div class="col-sm-4 col-xs-12 blog-sidebar">
 			<div class="sidebar-module sidebar-archives">
@@ -54,14 +78,23 @@
 			<div style="width:310px; margin-top:20px; text-align:right; padding-left:2px;">
 				<g:plusone size="medium"></g:plusone>
 				<script type="text/javascript">
-					(function() {
-						var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+					(function () {
+						var po = document.createElement('script');
+						po.type = 'text/javascript';
+						po.async = true;
 						po.src = 'https://apis.google.com/js/plusone.js';
-						var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+						var s = document.getElementsByTagName('script')[0];
+						s.parentNode.insertBefore(po, s);
 					})();
 				</script>
-				<iframe src="http://www.facebook.com/plugins/like.php?app_id=221027461249362&amp;href=http://mp3cooll.com<?= $_SERVER['REQUEST_URI'];?>&amp;send=false&amp;layout=button_count&amp;width=95&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:85px; height:21px; margin-right:8px;" allowTransparency="true"></iframe>
-				<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="mp3cooll.com">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+				<iframe
+					src="http://www.facebook.com/plugins/like.php?app_id=221027461249362&amp;href=http://mp3cooll.com<?= $_SERVER['REQUEST_URI']; ?>&amp;send=false&amp;layout=button_count&amp;width=95&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21"
+					scrolling="no" frameborder="0"
+					style="border:none; overflow:hidden; width:85px; height:21px; margin-right:8px;"
+					allowTransparency="true"></iframe>
+				<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal"
+				   data-via="mp3cooll.com">Tweet</a>
+				<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 			</div>
 
 			<div class="sidebar-module sidebar-now-playing">
@@ -77,20 +110,22 @@
 					<?php endforeach; ?>
 				</ul>
 			</div>
-		</div><!-- /.blog-sidebar -->
+		</div>
+		<!-- /.blog-sidebar -->
 	</div>
 </div>
+
 <div id="jquery_jplayer"></div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="/assets/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-	$("#search_form").submit(function() {
+	$("#search_form").submit(function () {
 		var val = $('#e22').val();
 		if (val.length > 3) {
-			window.location  = '/' + val.replace(/\s/g, "-") + '.html';
+			window.location = '/' + val.replace(/\s/g, "-") + '.html';
 		}
 		return false;
 	});
-	</script>
+</script>
 </body>
 </html>
