@@ -9,6 +9,7 @@
 	<link href="/assets/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/assets/css/custom-styles.css" rel="stylesheet">
 	<link href="/assets/css/select2.css" rel="stylesheet">
+    <link href="/assets/css/social-likes_classic.css" rel="stylesheet">
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -19,7 +20,7 @@
 <body>
 <div class="container container-custom">
 	<div class="row">
-		<a href="#" class="col-lg-2 col-sm-6 col-xs-12 logo-block navbar-brand">
+		<a href="/" class="col-lg-2 col-sm-6 col-xs-12 logo-block navbar-brand">
 			<span class="logo" title="attribute">MP3Cooll</span>
 			<!--<img src="/assets/images/logo.jpg">-->
 		</a>
@@ -47,6 +48,14 @@
 					Hope you enjoy staying here!
 				</p>
 			</div>
+            <div class="sidebar-module sidebar-social">
+                <h4 class="label label-info label-info-custom">Elsewhere</h4><br>
+                <div class="social-likes">
+                    <div class="facebook" title="Share on facebook">Facebook</div>
+                    <div class="twitter" title="Share on twitter">Twitter</div>
+                    <div class="vkontakte" title="Share on vkontakte">Вконтакте</div>
+                </div>
+            </div>
 			<div class="sidebar-module sidebar-now-playing">
 				<div class="label label-info label-info-custom">Users search</div>
 				<ul class="list-inline">
@@ -63,9 +72,11 @@
 		</div><!-- /.blog-sidebar -->
 	</div>
 </div>
-
+<div id="jquery_jplayer"></div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="/assets/js/jquery.jplayer.min.js"></script>
+<script src="/assets/js/custom-jplayer.js"></script>
 <script type="text/javascript">
 $("#search_form").submit(function() {
 	var val = $('#e22').val();
@@ -75,10 +86,12 @@ $("#search_form").submit(function() {
 	}
 	return false;
 });
+
 </script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="/assets/js/bootstrap.min.js"></script>
 <script src="/assets/js/select2.min.js"></script>
 <script src="/assets/js/searchsuggestion.js"></script>
+<script src="/assets/js/social-likes.min.js"></script>
 </body>
 </html>

@@ -1,24 +1,20 @@
-$(document).ready(function() {
-    var mediaPlayer = jQuery('.jpId');
-    mediaPlayer.jPlayer({
-        swfPath: '/asset/Jplayer.swf',
-        solution:    "flash, html",
-        supplied : 'mp3, oga, wav',
-        cssSelector: {
-            play: '.jp-play',
-            pause: '.jp-pause'
-        },
-        ready: function() {jQuery(this).jPlayer("setMedia", {
-            mp3: '/mp3/burito_feat_yolka_-_ty_znaesh_(zaycev.net).mp3',
-            oga: '/audio/track.oga',
-            wav: '/audio/track.wav'
-        });}
+$(document).ready(function(){
+    $("#jquery_jplayer").jPlayer({
+        swfPath: "/assets/js/Jplayer.swf",
+        supplied: "mp3",
+        wmode: "window",
+        solution: "flash, html"
+    });
 
-    });
-    $('.jp-play').click(function() {
-        $('.jpId').jPlayer('play');
-    });
-    $('.jp-pause').click(function() {
-        $('.jpId').jPlayer('pause');
+    $('.jp-play').click(function(e) {
+        e.preventDefault();
+        if($("#jquery_jplayer").data().jPlayer.status.paused) {
+            $("#jquery_jplayer").jPlayer("setMedia", {mp3: this.href }).jPlayer('play');
+            $(this).removeClass('jp-play').removeClass('glyphicon-play').addClass('glyphicon-pause').addClass('jp-pause');
+        }
+       else {
+            $('#jquery_jplayer').jPlayer('pause');
+            $(this).removeClass('jp-pause').removeClass('glyphicon-pause').addClass('glyphicon-play').addClass('jp-play');
+        }
     });
 });
