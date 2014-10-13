@@ -125,7 +125,10 @@ function randomArtists($limit = 10)
 		'Lorde',
 		'Enrique Iglesias',
 		'Michael Jackson',
-		'Pitbull'
+		'Pitbull',
+		'The Script',
+		'Childish Gambino',
+		'Nick Jonas'
 	];
 
 	shuffle($artists);
