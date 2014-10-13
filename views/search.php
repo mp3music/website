@@ -38,6 +38,6 @@
 <script type="text/javascript">
 	soundManager.setup({
 		useFlashBlock: true,
-		url: '/assets/js/swf/'
+		url: '/assets/js/swf/soundmanager2.swf'
 	});
 </script>

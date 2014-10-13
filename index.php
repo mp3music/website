@@ -68,4 +68,12 @@ $app->get('/:query.html', function ($query) use ($app) {
 	'query' => '.+'
 ]);
 
+// Search route
+$app->get('/:query', function ($query) use ($app) {
+		$app->redirect('/' . urlclean($query, '-') . '.html');
+	}
+)->conditions([
+	'query' => '.+'
+]);
+
 $app->run();
