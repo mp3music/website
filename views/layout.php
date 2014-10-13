@@ -56,7 +56,7 @@
 					<?php foreach ($requests as $request) : ?>
 						<li>
 							<a href="/<?= urlclean($request, '-'); ?>.html">
-								<?= $request; ?>
+								<?= $request; ?> mp3
 							</a>
 						</li>
 					<?php endforeach; ?>
