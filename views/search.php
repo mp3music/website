@@ -17,7 +17,7 @@
 							<div class="jp-gui jp-interface">
 								<ul class="jp-controls bs-glyphicons-list list-inline">
 									<li>
-										<a class="sm2_button inline-playable" tabindex="1" href="<?= $downloadUrl; ?>">
+										<a class="sm2_button inline-playable" tabindex="1" href="<?= $item['url']; ?>">
 											&nbsp;&nbsp;&nbsp;&nbsp;</a>
 									</li>
 									<li>
