@@ -5,6 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title><?= $title; ?></title>
+	<meta name="description" content="<?= $description; ?>">
 	<link href="/assets/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/assets/css/custom-styles.css" rel="stylesheet">
 	<!--[if lt IE 9]>
@@ -29,15 +30,19 @@
 	ga('create', 'UA-55375266-1', 'auto');
 	ga('send', 'pageview');
 </script>
-<div class="container container-custom">
-	<div class="row">
-		<a href="/" class="col-lg-2 col-sm-6 col-xs-12 logo-block navbar-brand">
+<div class="navbar navbar-default navbar-fixed-top search-bar-custom" role="navigation">
+	<div class="container container-custom">
+		<a href="/" class="logo-block navbar-brand">
 			<span class="logo" title="Free mp3 download">MP3Cooll</span>
 		</a>
 
-		<form class="col-lg-10 col-sm-4 navbar-form navbar-left search-input" id="search_form">
-			<input id="e22" type="text" placeholder="Search..." class="form-control input-text">
-			<button class="btn btn-info" type="submit"><span> Search </span></button>
+		<form class="bs-example bs-example-form" id="search_form">
+			<div class="input-group search-input">
+				<input id="e22" type="text" class="form-control">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-info">Search</button>
+          </span>
+			</div>
 		</form>
 	</div>
 </div>
@@ -71,7 +76,8 @@
 				<p>
 					mp3cooll.com is an easy way to listen music and download mp3.
 					You can find your favorite songs in our multimillion database of
-					quality mp3 links. Download free mp3 songs on your android or iPhone devices. We provide fast and relevant search.
+					quality mp3 links. Download free mp3 songs on your android or iPhone devices. We provide fast and
+					relevant search.
 					Hope you enjoy staying here!
 				</p>
 			</div>

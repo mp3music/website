@@ -17,14 +17,19 @@ $app->get('/', function () use ($app) {
 		$cache->connect('localhost');
 
 		if(($xmlString = $cache->get('top')) === false) {
-			$xmlString = file_get_contents('http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=30/xml');
+			$xmlString = file_get_contents('http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=40/xml');
 			$cache->set('top', $xmlString, 0, 8600);
 		}
 
 		$xml = new SimpleXMLElement($xmlString);
 		$results = $xml->entry;
 
-		$app->render('layout.php', ['page' => 'main', 'results' => $results, 'title' => 'Mp3 free download | Quick Search music | Download music for free']);
+		$app->render('layout.php', [
+			'page' => 'main',
+			'results' => $results,
+			'title' => 'Mp3 free download | Quick Search music | Download music for free',
+			'description' => 'Download free most popular mp3 and listen online music just now'
+		]);
 	}
 );
 
@@ -74,7 +79,8 @@ $app->get('/:query.html', function ($query) use ($app) {
 			'page' => 'search',
 			'results' => $results,
 			'query' => $query,
-			'title' => ucwords($query) . ' download mp3 music | Mp3Cooll.com'
+			'title' => ucwords($query) . ' download mp3 music | Mp3Cooll.com',
+			'description' => 'Search ' . ucwords($query) . ' download free mp3 and listen online song ' . ucwords($query) . ' just now unlimited.'
 		]);
 	}
 )->conditions([
