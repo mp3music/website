@@ -1,7 +1,8 @@
 <?php
 /**
  * @param $string
- * @return mixed|string
+ * @param string $delimeter
+ * @return string
  */
 function urlclean($string, $delimeter = ' ')
 {
@@ -62,75 +63,16 @@ function getLastQueries($limit = 10)
  */
 function randomArtists($limit = 10)
 {
-	$artists = [
-		'Chris Brown',
-		'Barbra Streisand',
-		'Meghan Trainor',
-		'Taylor Swift',
-		'Maroon 5',
-		'Ariana Grande',
-		'Nicki Minaj',
-		'Iggy Azalea',
-		'Sam Smith',
-		'Tim McGraw',
-		'Jason Aldean',
-		'OneRepublic',
-		'Ed Sheeran',
-		'Katy Perry',
-		'Florida Georgia Line',
-		'Train',
-		'George Strait',
-		'Luke Bryan',
-		'Charli XCX',
-		'Drake',
-		'Sia',
-		'Tove Lo',
-		'5 Seconds Of Summer',
-		'Wiz Khalifa',
-		'Coldplay',
-		'Jason Derulo',
-		'Blake Shelton',
-		'Beyonce',
-		'MAGIC!',
-		'Eminem',
-		'Imagine Dragons',
-		'Echosmith',
-		'Enrique Iglesias',
-		'Pitbull',
-		'Clean Bandit',
-		'Miley Cyrus',
-		'Jeremih',
-		'John Legend',
-		'Pharrell Williams',
-		'Lecrae',
-		'Calvin Harris',
-		'Nico & Vinz',
-		'Motionless In White',
-		'Trey Songz',
-		'Jhene Aiko',
-		'Bruno Mars',
-		'Lee Brice',
-		'Sam Hunt',
-		'Bobby Shmurda',
-		'One Direction',
-		'Jessie J',
-		'George Strait',
-		'Justin Bieber',
-		'Joe Bonamassa',
-		'Rita Ora',
-		'Fall Out Boy',
-		'Jennifer Hudson',
-		'Rae Sremmurd',
-		'Demi Lovato',
-		'Lorde',
-		'Enrique Iglesias',
-		'Michael Jackson',
-		'Pitbull',
-		'The Script',
-		'Childish Gambino',
-		'Nick Jonas'
-	];
+	$cache = new memcache();
+	$cache->connect('localhost');
 
-	shuffle($artists);
-	return array_slice($artists, 0, $limit);
+	if(($results = $cache->get('random_artists')) === false) {
+		$client = new MongoClient(MONGO_DSN);
+		$collection = $client->selectDB(MONGO_DBNAME)->selectCollection('artists');
+
+		$results = iterator_to_array($collection->find()->skip(rand(0, $collection->count() - $limit))->limit($limit));
+		$cache->set('random_artists', $results, 0, 3600);
+	}
+
+	return $results;
 }

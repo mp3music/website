@@ -109,8 +109,8 @@
 					<?php $artists = randomArtists(20); ?>
 					<?php foreach ($artists as $artist) : ?>
 						<li>
-							<a href="/<?= urlclean($artist, '-'); ?>.html">
-								<?= $artist; ?>
+							<a href="/<?= urlclean($artist['name'], '-'); ?>.html">
+								<?= $artist['name']; ?>
 							</a>
 						</li>
 					<?php endforeach; ?>
