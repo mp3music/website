@@ -119,10 +119,9 @@ body {
 /*`*/
 /*Content*/
 .artist_name {
-    color: #8E969B;
+    color: #3F4447;
 }
 .track_title {
-    color: #355a73;
     font-size: 17px;
 }
 .duration {

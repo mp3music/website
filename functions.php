@@ -1,13 +1,14 @@
 <?php
 /**
  * @param $string
- * @return mixed|string
+ * @param string $delimiter
+ * @return string
  */
-function urlclean($string, $delimeter = ' ')
+function urlclean($string, $delimiter = ' ')
 {
-	// Clean
-	$string = preg_replace('/[^\p{L}\d]/u', ' ', $string);
-	return mb_strtolower(preg_replace('/(\s{1})\1*/ui', $delimeter, trim($string)), 'utf-8');
+    // Clean
+    $string = preg_replace('/[^\p{L}\d]/u', ' ', $string);
+    return mb_strtolower(preg_replace('/(\s{1})\1*/ui', $delimiter, trim($string)), 'utf-8');
 }
 
 /**
@@ -20,11 +21,11 @@ function urlclean($string, $delimeter = ' ')
  */
 function s($string, $limit = 34, $points = true)
 {
-	if (mb_strlen($string) < $limit) {
-		return $string;
-	}
+    if (mb_strlen($string) < $limit) {
+        return $string;
+    }
 
-	return mb_substr($string, 0, $limit, 'utf-8') . ($points ? '...' : '');
+    return mb_substr($string, 0, $limit, 'utf-8') . ($points ? '...' : '');
 }
 
 /**
@@ -33,27 +34,19 @@ function s($string, $limit = 34, $points = true)
  */
 function getLastQueries($limit = 10)
 {
-	// Search from Vk or memcache
-	$cache = new memcache();
-	$cache->connect('localhost');
-	$key = __FUNCTION__;
+    return Memcache\Handler::factory()->cache(__FUNCTION__, Memcache\Handler::MINUTE, function () use ($limit) {
+        // Save request
+        $client = new MongoClient(MONGO_DSN);
+        $collection = $client->selectDB(MONGO_DBNAME)->selectCollection(MONGO_COLLECTION);
 
-	if(($return = $cache->get($key)) === false) {
-		// Save request
-		$client = new MongoClient(MONGO_DSN);
-		$collection = $client->selectDB(MONGO_DBNAME)->selectCollection(MONGO_COLLECTION);
+        $results = $collection->find()->sort(['created' => -1])->limit($limit);
+        $return = [];
+        foreach ($results as $item) {
+            $return[] = $item['request'];
+        }
 
-		$results = $collection->find()->sort(['created' => -1])->limit($limit);
-		$return = [];
-		foreach($results as $item) {
-			$return[] = $item['request'];
-		}
-
-		$cache->set($key, $return, 0, 60);
-	}
-
-
-	return $return;
+        return $return;
+    });
 }
 
 /**
@@ -62,75 +55,10 @@ function getLastQueries($limit = 10)
  */
 function randomArtists($limit = 10)
 {
-	$artists = [
-		'Chris Brown',
-		'Barbra Streisand',
-		'Meghan Trainor',
-		'Taylor Swift',
-		'Maroon 5',
-		'Ariana Grande',
-		'Nicki Minaj',
-		'Iggy Azalea',
-		'Sam Smith',
-		'Tim McGraw',
-		'Jason Aldean',
-		'OneRepublic',
-		'Ed Sheeran',
-		'Katy Perry',
-		'Florida Georgia Line',
-		'Train',
-		'George Strait',
-		'Luke Bryan',
-		'Charli XCX',
-		'Drake',
-		'Sia',
-		'Tove Lo',
-		'5 Seconds Of Summer',
-		'Wiz Khalifa',
-		'Coldplay',
-		'Jason Derulo',
-		'Blake Shelton',
-		'Beyonce',
-		'MAGIC!',
-		'Eminem',
-		'Imagine Dragons',
-		'Echosmith',
-		'Enrique Iglesias',
-		'Pitbull',
-		'Clean Bandit',
-		'Miley Cyrus',
-		'Jeremih',
-		'John Legend',
-		'Pharrell Williams',
-		'Lecrae',
-		'Calvin Harris',
-		'Nico & Vinz',
-		'Motionless In White',
-		'Trey Songz',
-		'Jhene Aiko',
-		'Bruno Mars',
-		'Lee Brice',
-		'Sam Hunt',
-		'Bobby Shmurda',
-		'One Direction',
-		'Jessie J',
-		'George Strait',
-		'Justin Bieber',
-		'Joe Bonamassa',
-		'Rita Ora',
-		'Fall Out Boy',
-		'Jennifer Hudson',
-		'Rae Sremmurd',
-		'Demi Lovato',
-		'Lorde',
-		'Enrique Iglesias',
-		'Michael Jackson',
-		'Pitbull',
-		'The Script',
-		'Childish Gambino',
-		'Nick Jonas'
-	];
+    return Memcache\Handler::factory()->cache(__FUNCTION__, Memcache\Handler::HOUR, function () use ($limit) {
+        $client = new MongoClient(MONGO_DSN);
+        $collection = $client->selectDB(MONGO_DBNAME)->selectCollection('artists');
 
-	shuffle($artists);
-	return array_slice($artists, 0, $limit);
+        return iterator_to_array($collection->find()->skip(mt_rand(0, $collection->count() - $limit))->limit($limit));
+    });
 }

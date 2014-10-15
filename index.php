@@ -2,6 +2,7 @@
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/functions.php';
+require_once __DIR__ . '/libs/Memcache/Handler.php';
 
 $app = new \Slim\Slim();
 
@@ -12,87 +13,63 @@ $view->setTemplatesDirectory(TEMPLATES_DIR);
 // Set routes
 // Main page route
 $app->get('/', function () use ($app) {
-		// Search from Vk or memcache
-		$cache = new memcache();
-		$cache->connect('localhost');
+        $xmlString = Memcache\Handler::factory()->cache('top', Memcache\Handler::DAY, function () {
+            return file_get_contents('http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=40/xml');
+        });
 
-		if(($xmlString = $cache->get('top')) === false) {
-			$xmlString = file_get_contents('http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=40/xml');
-			$cache->set('top', $xmlString, 0, 8600);
-		}
+        $xml = new SimpleXMLElement($xmlString);
+        $results = $xml->entry;
 
-		$xml = new SimpleXMLElement($xmlString);
-		$results = $xml->entry;
-
-		$app->render('layout.php', [
-			'page' => 'main',
-			'results' => $results,
-			'title' => 'Mp3 free download | Quick Search music | Download music for free',
-			'description' => 'Download free most popular mp3 and listen online music just now'
-		]);
-	}
+        $app->render('layout.php', [
+            'page' => 'main',
+            'results' => $results,
+            'title' => 'Mp3 free download | Quick Search music | Download music for free',
+            'description' => 'Download free most popular mp3 and listen online music just now'
+        ]);
+    }
 );
 
 // Search route
 $app->get('/:query.html', function ($query) use ($app) {
-		$query = urlclean($query);
-		// Save request
-		$client = new MongoClient(MONGO_DSN);
-		$collection = $client->selectDB(MONGO_DBNAME)->selectCollection(MONGO_COLLECTION);
-		if ($collection->find(['request' => $query])) {
-			$collection->insert([
-				'request' => $query,
-				'created' => new MongoDate(),
-				'views' => 1
-			]);
-		}
-		else {
-			$collection->update(['request' => $query], ['$inc' => ['views' => 1]]);
-		}
+        $query = urlclean($query);
+        // Save request
+        $client = new MongoClient(MONGO_DSN);
+        $collection = $client->selectDB(MONGO_DBNAME)->selectCollection(MONGO_COLLECTION);
+        if ($collection->find(['request' => $query])) {
+            $collection->insert([
+                'request' => $query,
+                'created' => new MongoDate(),
+                'views' => 1
+            ]);
+        } else {
+            $collection->update(['request' => $query], ['$inc' => ['views' => 1]]);
+        }
 
-		// Search from Vk or memcache
-		$cache = new memcache();
-		$cache->connect('localhost');
+        $results = Memcache\Handler::factory()->cache($query, 72000, function () use ($query) {
+            require_once __DIR__ . '/libs/Vkontakte/Handler.php';
 
-		// Поиск в ВК и отправка пользователю
-		if(($results = $cache->get($query)) === false) {
-			// Search from Vk or memcache
-			$http = new dHttp\Client('https://api.vk.com/method/audio.search.json?access_token=096fb2d19fc28da6694e9db15f47ff9561c36628f5485fbcd642f7edc6185ea413ab2f2fa4a5c1789cb79&q=' . urlencode($query) . '&count=30&sort=2');
-			$results = json_decode($http->get()->getBody(), true);
+            $vkClient = new Vkontakte\Handler($query);
+            return $vkClient->searchWithParse();
+        });
 
-			if(!isset($results['response'][1])) {
-				$newQuery = $query;
-				$newQuery = explode(' ', $newQuery);
-				if(count($newQuery) > 1) {
-					$newQuery = implode(' ', array_slice($newQuery, 0, count($newQuery) - 1));
-
-					$http = new dHttp\Client('https://api.vk.com/method/audio.search.json?access_token=096fb2d19fc28da6694e9db15f47ff9561c36628f5485fbcd642f7edc6185ea413ab2f2fa4a5c1789cb79&q=' . urlencode($newQuery) . '&count=30&sort=2');
-					$results = json_decode($http->get()->getBody(), true);
-				}
-
-				$cache->set($query, $results, 0, 72000);
-				}
-
-		}
-
-		$app->render('layout.php', [
-			'page' => 'search',
-			'results' => $results,
-			'query' => $query,
-			'title' => ucwords($query) . ' download mp3 music | Mp3Cooll.com',
-			'description' => 'Search ' . ucwords($query) . ' download free mp3 and listen online song ' . ucwords($query) . ' just now unlimited.'
-		]);
-	}
+        $app->render('layout.php', [
+            'page' => 'search',
+            'results' => $results,
+            'query' => $query,
+            'title' => ucwords($query) . ' download mp3 music | Mp3Cooll.com',
+            'description' => 'Search ' . ucwords($query) . ' download free mp3 and listen online song ' . ucwords($query) . ' just now unlimited.'
+        ]);
+    }
 )->conditions([
-	'query' => '.+'
+    'query' => '.+'
 ]);
 
 // Search route
 $app->get('/:query', function ($query) use ($app) {
-		$app->redirect('/' . urlclean($query, '-') . '.html');
-	}
+        $app->redirect('/' . urlclean($query, '-') . '.html');
+    }
 )->conditions([
-	'query' => '.+'
+    'query' => '.+'
 ]);
 
 $app->run();
