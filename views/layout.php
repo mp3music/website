@@ -40,7 +40,7 @@
 			<div class="input-group search-input">
 				<input id="e22" type="text" class="form-control">
           <span class="input-group-btn">
-            <button type="button" class="btn btn-info">Search</button>
+            <button type="submit" class="btn btn-info">Search</button>
           </span>
 			</div>
 		</form>
