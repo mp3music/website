@@ -32,7 +32,7 @@ class Handler extends \Memcache
      * @param int $timeout
      * @return Handler
      */
-    public static function factory($host = 'localhost', $port = 11211, $timeout = 1)
+    public static function factory($host = '127.0.0.1', $port = 11211, $timeout = 1)
     {
         if (self::$handler === null) {
             self::$handler = new self;
