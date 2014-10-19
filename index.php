@@ -14,7 +14,7 @@ $view->setTemplatesDirectory(TEMPLATES_DIR);
 // Main page route
 $app->get('/', function () use ($app) {
         $xmlString = Memcache\Handler::factory()->cache('top', Memcache\Handler::DAY, function () {
-            return file_get_contents('http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=40/xml');
+            return file_get_contents('http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=50/xml');
         });
 
         $xml = new SimpleXMLElement($xmlString);
@@ -23,7 +23,7 @@ $app->get('/', function () use ($app) {
         $app->render('layout.php', [
             'page' => 'main',
             'results' => $results,
-            'title' => 'Mp3 free download | Quick Search music | Download music for free',
+            'title' => 'Download mp3 free | Quick Search music | Download music for free',
             'description' => 'Download free most popular mp3 and listen online music just now'
         ]);
     }
@@ -32,6 +32,7 @@ $app->get('/', function () use ($app) {
 // Search route
 $app->get('/:query.html', function ($query) use ($app) {
         $query = urlclean($query);
+
         // Save request
         $client = new MongoClient(MONGO_DSN);
         $collection = $client->selectDB(MONGO_DBNAME)->selectCollection(MONGO_COLLECTION);
@@ -45,19 +46,18 @@ $app->get('/:query.html', function ($query) use ($app) {
             $collection->update(['request' => $query], ['$inc' => ['views' => 1]]);
         }
 
-        $results = Memcache\Handler::factory()->cache($query, 72000, function () use ($query) {
-            require_once __DIR__ . '/libs/Vkontakte/Handler.php';
+        require_once __DIR__ . '/libs/Vkontakte/Handler.php';
 
-            $vkClient = new Vkontakte\Handler($query);
-            return $vkClient->searchWithParse();
-        });
+        $vkClient = new Vkontakte\Handler($query);
+        $results = $vkClient->searchWithParse();
 
         $app->render('layout.php', [
             'page' => 'search',
             'results' => $results,
             'query' => $query,
+            'video' => getVideo($query),
             'title' => ucwords($query) . ' download mp3 music | Mp3Cooll.com',
-            'description' => 'Search ' . ucwords($query) . ' download free mp3 and listen online song ' . ucwords($query) . ' just now unlimited.'
+            'description' => 'Download ' . ucwords($query) . ' mp3 and listen online song ' . ucwords($query) . ' just now unlimited.'
         ]);
     }
 )->conditions([

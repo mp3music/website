@@ -45,14 +45,13 @@ class Handler
     public function searchWithParse()
     {
         $results = $this->search();
-
-        if (!isset($results['response'][1])) {
+        if (count($results['result']) < 1) {
             $newQuery = explode(' ', $this->query);
             $wordsCount = count($newQuery);
 
             if ($wordsCount > 1) {
                 for ($i = 0; $i < $wordsCount; $i++) {
-                    unset($newQuery[$wordsCount-1]);
+                    unset($newQuery[$wordsCount - 1]);
                     $this->setQuery(implode(' ', $newQuery));
                     return $this->searchWithParse();
                 }
@@ -87,6 +86,6 @@ class Handler
      */
     private function buildRequestUri()
     {
-        return 'https://api.vk.com/method/audio.search.json?access_token=096fb2d19fc28da6694e9db15f47ff9561c36628f5485fbcd642f7edc6185ea413ab2f2fa4a5c1789cb79&q=' . urlencode($this->query) . '&count=' . $this->limit . '&sort=2';
+        return 'http://api.mp3cooll.com/api/?query=' . urlencode($this->query) . '&api_key=123';
     }
 }
