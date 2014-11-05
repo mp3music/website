@@ -1,7 +1,5 @@
 <div class="panel panel-default">
-	<!-- Default panel contents -->
 	<h1 class="panel-heading panel-title">Download <?= $query; ?> mp3</h1>
-	<!-- List group -->
 	<ul class="list-group">
 		<?php if (count($results)) : ?>
 
