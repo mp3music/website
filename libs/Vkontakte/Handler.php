@@ -35,7 +35,6 @@ class Handler
     {
         require_once(ROOT_DIR . '/../api.mp3cooll.com/lib/cloud.php');
         require_once(ROOT_DIR . '/../api.mp3cooll.com/lib/vkontakte.php');
-        require_once(ROOT_DIR . '/../api.mp3cooll.com/lib/eee.php');
 
         $handler = new \vkontakte([
             'query' => $this->query,
@@ -43,6 +42,7 @@ class Handler
         ]);
 
         if(count(($results = $handler->search())) == 0) {
+            require_once(ROOT_DIR . '/../api.mp3cooll.com/lib/eee.php');
             $handler = new \eee([
                 'query' => $this->query,
                 'offset' => 0
