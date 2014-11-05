@@ -36,7 +36,7 @@
             <span class="logo" title="Free mp3 download">MP3Cooll</span>
         </a>
 
-        <form class="bs-example bs-example-form" id="search_form">
+        <form id="search_form">
             <div class="input-group search-input">
                 <input id="e22" type="text" class="form-control" placeholder="Type in a song title or artist name" value="<?= isset($query) ? $query : ''; ?>">
           <span class="input-group-btn">
@@ -101,7 +101,6 @@
                 <div><a href="/now.html">more</a></div>
             </div>
         </div>
-        <!-- /.blog-sidebar -->
     </div>
 </div>
 
