@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= $title; ?></title>
     <meta name="description" content="<?= $description; ?>">
-    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="/assets/css/custom-styles.min.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -38,7 +38,7 @@
 
         <form class="bs-example bs-example-form" id="search_form">
             <div class="input-group search-input">
-                <input id="e22" type="text" class="form-control">
+                <input id="e22" type="text" class="form-control" placeholder="Type in a song title or artist name" value="<?= isset($query) ? $query : ''; ?>">
           <span class="input-group-btn">
             <button type="submit" class="btn btn-info">Search</button>
           </span>
@@ -59,7 +59,7 @@
         <div class="col-sm-4 col-xs-12 blog-sidebar">
             <div class="sidebar-module sidebar-archives">
                 <p>
-                    mp3cooll.com is an easy way to listen music and download mp3.
+                    mp3cooll.com is an easy way to listen music, watch video and download mp3.
                     You can find your favorite songs in our multimillion database of
                     quality mp3 links. Download free mp3 songs on your android or iPhone devices. We provide fast and
                     relevant search.
@@ -67,25 +67,16 @@
                 </p>
             </div>
             <div style="width:310px; margin-top:20px; text-align:right; padding-left:2px;">
-                <g:plusone size="medium"></g:plusone>
-                <script type="text/javascript">
-                    (function () {
-                        var po = document.createElement('script');
-                        po.type = 'text/javascript';
-                        po.async = true;
-                        po.src = 'https://apis.google.com/js/plusone.js';
-                        var s = document.getElementsByTagName('script')[0];
-                        s.parentNode.insertBefore(po, s);
-                    })();
-                </script>
-                <iframe
-                    src="http://www.facebook.com/plugins/like.php?app_id=221027461249362&amp;href=http://mp3cooll.com<?= $_SERVER['REQUEST_URI']; ?>&amp;send=false&amp;layout=button_count&amp;width=95&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21"
-                    scrolling="no" frameborder="0"
-                    style="border:none; overflow:hidden; width:85px; height:21px; margin-right:8px;"
-                    allowTransparency="true"></iframe>
-                <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal"
-                   data-via="mp3cooll.com">Tweet</a>
-                <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+                <script type="text/javascript">(function() {
+                        if (window.pluso)if (typeof window.pluso.start == "function") return;
+                        if (window.ifpluso==undefined) { window.ifpluso = 1;
+                            var d = document, s = d.createElement('script'), g = 'getElementsByTagName';
+                            s.type = 'text/javascript'; s.charset='UTF-8'; s.async = true;
+                            s.src = ('https:' == window.location.protocol ? 'https' : 'http')  + '://share.pluso.ru/pluso-like.js';
+                            var h=d[g]('body')[0];
+                            h.appendChild(s);
+                        }})();</script>
+                <div class="pluso" data-background="transparent" data-options="medium,round,line,horizontal,counter,theme=04" data-services="facebook,twitter,google,vkontakte,odnoklassniki" data-url="http://mp3cooll.com/" data-title="<?= $title; ?>" data-description="<?= $description; ?>"></div>
             </div>
 
             <?php if (isset($video) && $video != null) : ?>
@@ -96,17 +87,18 @@
             <?php endif; ?>
 
             <div class="sidebar-module sidebar-now-playing">
-                <div class="label label-info label-info-custom">Top singers</div>
+                <div class="label label-info label-info-custom">Now playing</div>
                 <ul class="list-inline">
-                    <?php $artists = randomArtists(20); ?>
+                    <?php $artists = getLastQueries(20); ?>
                     <?php foreach ($artists as $artist) : ?>
                         <li>
-                            <a href="/<?= urlclean($artist['name'], '-'); ?>.html">
-                                <?= $artist['name']; ?>
+                            <a href="/<?= urlclean($artist, '-'); ?>.html">
+                                <?= $artist; ?>
                             </a>
                         </li>
                     <?php endforeach; ?>
                 </ul>
+                <div><a href="/now.html">more</a></div>
             </div>
         </div>
         <!-- /.blog-sidebar -->
@@ -115,15 +107,23 @@
 
 <div id="jquery_jplayer"></div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="/assets/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script type="text/javascript">
     $("#search_form").submit(function () {
         var val = $('#e22').val();
-        if (val.length > 3) {
+        if (val.length >= 2) {
+            ga('send', 'event', 'button', 'search');
             val = val.replace(/[\s\.\!\@\#\$\%\^\&\*\(\)\\\}\]\{\[\'\"\;\:]/g, "-").toLowerCase();
             window.location = '/' + val.replace(/--/g, "-") + '.html';
         }
         return false;
+    });
+
+    $(".inline-playable").click(function(){
+        ga('send', 'event', 'button', 'play');
+    });
+    $(".download-button").click(function(){
+        ga('send', 'event', 'button', 'download');
     });
 </script>
 </body>

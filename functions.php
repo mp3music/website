@@ -34,19 +34,23 @@ function s($string, $limit = 34, $points = true)
  */
 function getLastQueries($limit = 10)
 {
-    return Memcache\Handler::factory()->cache(__FUNCTION__, Memcache\Handler::MINUTE, function () use ($limit) {
-        // Save request
-        $client = new MongoClient(MONGO_DSN);
-        $collection = $client->selectDB(MONGO_DBNAME)->selectCollection(MONGO_COLLECTION);
+    $results = Memcache\Handler::factory()->cache('now', Memcache\Handler::MINUTE, function () {
+        $source = Sunra\PhpSimple\HtmlDomParser::file_get_html('http://mp3skull.com/latest.html');
+        $links = $source->find('#content a');
+        $result = [];
 
-        $results = $collection->find()->sort(['created' => -1])->limit($limit);
-        $return = [];
-        foreach ($results as $item) {
-            $return[] = $item['request'];
+        foreach($links as $link) {
+            $result[] = $link->innertext;
         }
 
-        return $return;
+        return $result;
     });
+
+    if(count($results) <= $limit) {
+        return $results;
+    }
+
+    return array_slice($results, 0, $limit);
 }
 
 /**
@@ -55,7 +59,7 @@ function getLastQueries($limit = 10)
  */
 function randomArtists($limit = 10)
 {
-    return Memcache\Handler::factory()->cache(__FUNCTION__, 1800, function () use ($limit) {
+    return Memcache\Handler::factory()->cache(__FUNCTION__, \Memcache\Handler::MINUTE, function () use ($limit) {
         $client = new MongoClient(MONGO_DSN);
         $collection = $client->selectDB(MONGO_DBNAME)->selectCollection('artists');
 
@@ -79,4 +83,73 @@ function getVideo($query)
         return '<iframe id="ytplayer" type="text/html" width="100%" height="200" src="' . str_replace('/v/', '/embed/', $json['feed']['entry'][0]['media$group']['media$content'][0]['url']) . '&autohide=1&
 iv_load_policy=3&color=white&theme=light&showinfo=0" frameborder="0"></iframe>';
     });
+}
+
+/**
+ * @return bool
+ */
+function isBot()
+{
+    if (!isset($_SERVER['HTTP_USER_AGENT'])) {
+        return true;
+    }
+
+    $bots = array(
+        'rambler',
+        'googlebot',
+        'aport',
+        'yahoo',
+        'msnbot',
+        'turtle',
+        'mail.ru',
+        'omsktele',
+        'yetibot',
+        'picsearch',
+        'sape.bot',
+        'sape_context',
+        'gigabot',
+        'snapbot',
+        'alexa.com',
+        'megadownload.net',
+        'askpeter.info',
+        'igde.ru',
+        'ask.com',
+        'qwartabot',
+        'yanga.co.uk',
+        'scoutjet',
+        'similarpages',
+        'oozbot',
+        'shrinktheweb.com',
+        'aboutusbot',
+        'followsite.com',
+        'dataparksearch',
+        'google-sitemaps',
+        'appEngine-google',
+        'feedfetcher-google',
+        'liveinternet.ru',
+        'xml-sitemaps.com',
+        'agama',
+        'metadatalabs.com',
+        'h1.hrn.ru',
+        'googlealert.com',
+        'seo-rus.com',
+        'yaDirectBot',
+        'yandeG',
+        'yandex',
+        'yandexSomething',
+        'Copyscape.com',
+        'AdsBot-Google',
+        'domaintools.com',
+        'Nigma.ru',
+        'bing.com',
+        'dotnetdotcom'
+    );
+
+    foreach ($bots as $bot) {
+        if (stripos($_SERVER['HTTP_USER_AGENT'], $bot) !== false) {
+            return $bot;
+        }
+    }
+
+    return false;
 }

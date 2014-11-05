@@ -2,8 +2,6 @@
 
 namespace Vkontakte;
 
-use \dHttp\Client;
-
 /**
  * Class Handler
  *
@@ -35,8 +33,25 @@ class Handler
      */
     public function search()
     {
-        $http = new Client($this->buildRequestUri());
-        return json_decode($http->get()->getBody(), true);
+        require_once(ROOT_DIR . '/../api.mp3cooll.com/lib/cloud.php');
+        require_once(ROOT_DIR . '/../api.mp3cooll.com/lib/vkontakte.php');
+        require_once(ROOT_DIR . '/../api.mp3cooll.com/lib/eee.php');
+
+        $handler = new \vkontakte([
+            'query' => $this->query,
+            'offset' => 0
+        ]);
+
+        if(count(($results = $handler->search())) == 0) {
+            $handler = new \eee([
+                'query' => $this->query,
+                'offset' => 0
+            ]);
+
+            $results = $handler->search();
+        }
+
+        return ['result' => $results];
     }
 
     /**
@@ -79,13 +94,5 @@ class Handler
     {
         $this->limit = $limit;
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    private function buildRequestUri()
-    {
-        return 'http://api.mp3cooll.com/api/?query=' . urlencode($this->query) . '&api_key=123';
     }
 }

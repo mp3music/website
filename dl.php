@@ -1,7 +1,5 @@
 <?php
-$file = urldecode($_GET['link']);
-$filename = $_GET['name'];
 header("Content-type: octet/stream");
-header("Content-disposition: attachment; filename=" . $filename . "");
-readfile($file);
+header("Content-disposition: attachment; filename=" . $_GET['name']);
+readfile(urldecode($_GET['link']));
 exit;

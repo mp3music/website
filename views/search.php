@@ -17,8 +17,7 @@
 							<div class="jp-gui jp-interface">
 								<ul class="jp-controls bs-glyphicons-list list-inline">
 									<li>
-										<a class="sm2_button inline-playable" tabindex="1" href="<?= $item['url']; ?>">
-											&nbsp;&nbsp;&nbsp;&nbsp;</a>
+										<a class="sm2_button inline-playable" tabindex="1" href="<?= $item['url']; ?>"></a>
 									</li>
 									<li>
 										<a class="download-button" href="<?= $downloadUrl; ?>"></a>
@@ -38,6 +37,7 @@
 <script type="text/javascript">
 	soundManager.setup({
 		useFlashBlock: true,
+        debugMode: false,
 		url: '/assets/js/swf/soundmanager2.swf'
 	});
 </script>

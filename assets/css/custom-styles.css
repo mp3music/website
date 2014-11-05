@@ -53,6 +53,7 @@ body {
 }
 .list-group-item-custom .list-group-href {
     font-size: 14px;
+    display: block;
 }
 .list-group-item-custom:hover {
     background-color: #f9f9f9;
