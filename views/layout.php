@@ -39,9 +39,9 @@
         <form id="search_form">
             <div class="input-group search-input">
                 <input id="e22" type="text" class="form-control" placeholder="Type in a song title or artist name" value="<?= isset($query) ? $query : ''; ?>">
-          <span class="input-group-btn">
-            <button type="submit" class="btn btn-info">Search</button>
-          </span>
+                 <span class="input-group-btn">
+                     <button type="submit" class="btn btn-info">Search</button>
+                 </span>
             </div>
         </form>
     </div>
@@ -65,15 +65,19 @@
                 </p>
             </div>
             <div style="width:310px; margin-top:20px; text-align:right; padding-left:2px;">
-                <script type="text/javascript">(function() {
+                <script type="text/javascript">(function () {
                         if (window.pluso)if (typeof window.pluso.start == "function") return;
-                        if (window.ifpluso==undefined) { window.ifpluso = 1;
+                        if (window.ifpluso == undefined) {
+                            window.ifpluso = 1;
                             var d = document, s = d.createElement('script'), g = 'getElementsByTagName';
-                            s.type = 'text/javascript'; s.charset='UTF-8'; s.async = true;
-                            s.src = ('https:' == window.location.protocol ? 'https' : 'http')  + '://share.pluso.ru/pluso-like.js';
-                            var h=d[g]('body')[0];
+                            s.type = 'text/javascript';
+                            s.charset = 'UTF-8';
+                            s.async = true;
+                            s.src = ('https:' == window.location.protocol ? 'https' : 'http') + '://share.pluso.ru/pluso-like.js';
+                            var h = d[g]('body')[0];
                             h.appendChild(s);
-                        }})();</script>
+                        }
+                    })();</script>
                 <div class="pluso" data-background="transparent" data-options="medium,round,line,horizontal,counter,theme=04" data-services="facebook,twitter,google,vkontakte,odnoklassniki" data-url="http://mp3cooll.com/" data-title="<?= $title; ?>" data-description="<?= $description; ?>"></div>
             </div>
 
@@ -116,10 +120,10 @@
         return false;
     });
 
-    $(".inline-playable").click(function(){
+    $(".inline-playable").click(function () {
         ga('send', 'event', 'button', 'play');
     });
-    $(".download-button").click(function(){
+    $(".download-button").click(function () {
         ga('send', 'event', 'button', 'download');
     });
 </script>
