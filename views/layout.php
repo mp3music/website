@@ -52,9 +52,7 @@
             <div class="blog-post blog-post-content">
                 <?= $this->render($page . '.php'); ?>
             </div>
-            <!-- /.blog-post -->
         </div>
-        <!-- /.blog-main -->
 
         <div class="col-sm-4 col-xs-12 blog-sidebar">
             <div class="sidebar-module sidebar-archives">
