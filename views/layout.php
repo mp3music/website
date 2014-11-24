@@ -77,7 +77,7 @@
                     }(document, 'script', 'facebook-jssdk'));</script>
                 <div class="fb-like" data-href="https://www.facebook.com/pages/Mp3Cooll/342836852560201"
                      data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
-                <a href="https://www.facebook.com/pages/Mp3Cooll/342836852560201" target="_blank">Mp3Cooll Facebook
+                <a href="https://www.facebook.com/mp3coollmusic" target="_blank">Mp3Cooll Facebook
                     Page</a>
             </div>
 
