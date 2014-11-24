@@ -12,7 +12,6 @@ RewriteCond %{REQUEST_FILENAME} !-d
 # otherwise forward it to index.php
 RewriteRule . index.php
 
-
 RedirectMatch 404 "(?:.*)/(?:\.git)(?:/.*)?$"
 
 <IfModule mod_expires.c>

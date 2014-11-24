@@ -34,19 +34,19 @@ function s($string, $limit = 34, $points = true)
  */
 function getLastQueries($limit = 10)
 {
-    $results = Memcache\Handler::factory()->cache('now', Memcache\Handler::MINUTE, function () {
+    $results = Memcache\Handler::factory()->cache('now', 10, function () {
         $source = Sunra\PhpSimple\HtmlDomParser::file_get_html('http://mp3skull.com/latest.html');
         $links = $source->find('#content a');
         $result = [];
 
-        foreach($links as $link) {
+        foreach ($links as $link) {
             $result[] = $link->innertext;
         }
 
         return $result;
     });
 
-    if(count($results) <= $limit) {
+    if (count($results) <= $limit) {
         return $results;
     }
 
@@ -74,13 +74,15 @@ function randomArtists($limit = 10)
 function getVideo($query)
 {
     return Memcache\Handler::factory()->cache($query . '_video', Memcache\Handler::HOUR, function () use ($query) {
-        $json = json_decode(file_get_contents('http://gdata.youtube.com/feeds/api/videos?max-results=1&alt=json&q=' . urlencode($query)), true);
+        $json = json_decode(file_get_contents('http://gdata.youtube.com/feeds/api/videos?max-results=1&alt=json&q=' . urlencode($query)),
+            true);
 
-        if(!isset($json['feed']['entry'][0]['media$group']['media$content'][0]['url'])) {
+        if (!isset($json['feed']['entry'][0]['media$group']['media$content'][0]['url'])) {
             return null;
         }
 
-        return '<iframe id="ytplayer" type="text/html" width="100%" height="200" src="' . str_replace('/v/', '/embed/', $json['feed']['entry'][0]['media$group']['media$content'][0]['url']) . '&autohide=1&
+        return '<iframe id="ytplayer" type="text/html" width="100%" height="200" src="' . str_replace('/v/', '/embed/',
+            $json['feed']['entry'][0]['media$group']['media$content'][0]['url']) . '&autohide=1&
 iv_load_policy=3&color=white&theme=light&showinfo=0" frameborder="0"></iframe>';
     });
 }
@@ -152,4 +154,34 @@ function isBot()
     }
 
     return false;
+}
+
+/**
+ * @param $query
+ * @return array
+ */
+function queryLimit($query)
+{
+    return implode(' ', array_slice(explode(' ', $query), 0, 5));
+}
+
+/**
+ * @param $query
+ */
+function saveRequest($query)
+{
+    if (!isBot()) {
+        // Save request
+        $client = new MongoClient(MONGO_DSN);
+        $collection = $client->selectDB(MONGO_DBNAME)->selectCollection(MONGO_COLLECTION);
+        if (!$collection->count(['request' => $query])) {
+            $collection->insert([
+                'request' => $query,
+                'created' => new MongoDate(),
+                'views' => 1
+            ]);
+        } else {
+            $collection->update(['request' => $query], ['$inc' => ['views' => 1]]);
+        }
+    }
 }

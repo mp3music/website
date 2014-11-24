@@ -1,7 +1,9 @@
 <div class="panel panel-default">
+	<!-- Default panel contents -->
 	<h1 class="panel-heading panel-title">Download <?= $query; ?> mp3</h1>
-	<ul class="list-group">
-		<?php if (count($results)) : ?>
+	<!-- List group -->
+	<ul class="list-group playing">
+		<?php if (count($results) && isset($results['result'])) : ?>
 
 			<?php foreach ($results['result'] as $item) : ?>
 				<?php $downloadUrl = '/dl.php?link=' . urlencode($item['url']) . '&name=' . urlclean($item['title'] . '-' . $item['artist']['name'],
@@ -15,7 +17,7 @@
 							<div class="jp-gui jp-interface">
 								<ul class="jp-controls bs-glyphicons-list list-inline">
 									<li>
-										<a class="sm2_button inline-playable" tabindex="1" href="<?= $item['url']; ?>"></a>
+										<a class="sm2_button sm2_play inline-playable" tabindex="1" data-src="<?= $item['url']; ?>"></a>
 									</li>
 									<li>
 										<a class="download-button" href="<?= $downloadUrl; ?>"></a>
@@ -29,13 +31,4 @@
 		<?php endif; ?>
 	</ul>
 </div>
-
-<script src="/assets/js/soundmanager2.js"></script>
-<script src="/assets/js/mp3-player-button.js"></script>
-<script type="text/javascript">
-	soundManager.setup({
-		useFlashBlock: true,
-        debugMode: false,
-		url: '/assets/js/swf/soundmanager2.swf'
-	});
-</script>
+<br><br>

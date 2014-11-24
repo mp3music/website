@@ -94,8 +94,8 @@ body {
 .download-button {
     position: relative;
     display: inline-block; /* If you worry about old browser bugs, Firefox 2 might not like this and may need -moz-inline-box instead. :D */
-    width: 22px;
-    height: 22px;
+    width: 30px;
+    height: 30px;
     text-indent: -9999px; /* don't show link text */
     overflow: hidden; /* don't draw inner link text */
     vertical-align: middle;
@@ -115,7 +115,7 @@ body {
     background-color: #6195af;
     background-image: url(/assets/images/download.png);
     background-repeat: no-repeat;
-    background-position: 7px 50%;
+    background-position: 11px 50%;
 }
 /*`*/
 /*Content*/
@@ -132,8 +132,8 @@ body {
 a.sm2_button {
     position: relative;
     display: inline-block;
-    width: 22px;
-    height: 22px;
+    width: 30px;
+    height: 30px;
     text-indent: -9999px;
     overflow: hidden;
     vertical-align: middle;
@@ -148,26 +148,91 @@ a.sm2_button {
 a.sm2_button:focus {
     outline: none; /* maybe evil, but don't show the slight border outline on focus. */
 }
-a.sm2_button,
+a.sm2_play,
 a.sm2_button.sm2_paused:hover {
     background-color: #3399cc;
     background-image: url(/assets/images/arrow-right-white.png);
     background-size: 9px 10px;
     background-repeat: no-repeat;
-    background-position: 7px 50%;
+    background-position: 10px 50%;
+}
+a.sm2_paused {
+    background-color: #cc3333;
+    background-image: url(/assets/images/pause.png);
+    background-size: 9px 10px;
+    background-repeat: no-repeat;
+    background-position: 10px 50%;
 }
 a.sm2_button:hover,
-a.sm2_button.sm2_playing,
-a.sm2_button.sm2_playing:hover {
+a.sm2_button.sm2_play:hover {
     background-color: #cc3333;
 }
-a.sm2_button.sm2_playing,
-a.sm2_button.sm2_playing:hover {
-    -moz-transform: rotate(90deg);
-    -webkit-transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
+.audiojs {
+    width: 100%;
+    height: 30px;
+    background: #404040;
+    position: fixed;
+    bottom: 0px;
+    font-family: inherit;
+    font-size: 12px;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #444), color-stop(0.5, #555), color-stop(0.51, #444), color-stop(1, #444));
+    background-image: -moz-linear-gradient(center top, #444 0%, #555 50%, #444 51%, #444 100%);
+    -webkit-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
+    -o-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
 }
-a.sm2_button.sm2_paused,
-a.sm2_button.sm2_paused:hover {
-    background-color: #666;
+.audiojs .play-pause {
+    width: 8%;
+    height: 40px;
+    padding: 2px 6px;
+    margin: 0px;
+    float: left;
+    overflow: hidden;
+    border-right: 1px solid #3D3D3D;
+}
+.audiojs .scrubber {
+    position: relative;
+    float: left;
+    width: 66%;
+    background: #5a5a5a;
+    height: 10px;
+    margin: 10px;
+    border-top: 1px solid #3f3f3f;
+    border-left: 0px;
+    border-bottom: 0px;
+    overflow: hidden;
+}
+.audiojs .time {
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    margin: 0px 0px 0px 6px;
+    padding: 0px 6px 0px 12px;
+    border-left: 1px solid #3D3D3D;
+    color: #ddd;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+}
+.audiojs .loaded {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 10px;
+    width: 0px;
+    border-radius: 1px;
+    background: #000;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #222), color-stop(0.5, #333), color-stop(0.51, #222), color-stop(1, #222));
+    background-image: -moz-linear-gradient(center top, #222 0%, #333 50%, #222 51%, #222 100%);
+}
+.audiojs .progress {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 10px;
+    width: 0px;
+    background: #ccc;
+    z-index: 1;
+    border-radius: 1px;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ccc), color-stop(0.5, #ddd), color-stop(0.51, #ccc), color-stop(1, #ccc));
+    background-image: -moz-linear-gradient(center top, #ccc 0%, #ddd 50%, #ccc 51%, #ccc 100%);
 }
