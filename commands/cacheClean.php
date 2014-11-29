@@ -5,7 +5,7 @@
  * Date: 29.11.2014
  * Time: 12:46
  */
-require_once __DIR__ . '/../libs/MongoSearch/MongoSearch.php';
+require_once __DIR__ . '/../libs/Mongo/MongoCache.php';
 
-$mongoSearch = new MongoSearch();
+$mongoSearch = new MongoCache();
 $mongoSearch->cleanExpiredCache();

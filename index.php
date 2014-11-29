@@ -64,25 +64,9 @@ $app->get('/:query.html', function ($query) use ($app) {
     // Save query
     saveRequest($query);
 
-    $results = Memcache\Handler::factory()->cache($query, \Memcache\Handler::HOUR, function () use ($query) {
-        require_once __DIR__ . '/libs/MongoSearch/MongoSearch.php';
-
-        $mongoSearch = new MongoSearch();
-        if(($result = $mongoSearch->search($query)) === null) {
-            require_once __DIR__ . '/libs/Vkontakte/Handler.php';
-
-            $vkClient = new Vkontakte\Handler($query);
-            $result = $vkClient->searchWithParse();
-
-            $mongoSearch->set($query, $result);
-        }
-
-        return $result;
-    });
-
     $app->render('layout.php', [
         'page' => 'search',
-        'results' => $results,
+        'results' => search($query),
         'query' => $query,
         'video' => getVideo($query),
         'title' => ucwords($query) . ' download mp3 music | Mp3Cooll.com',
@@ -101,25 +85,9 @@ $app->get('/search', function () use ($app) {
     // Save query
     saveRequest($query);
 
-    $results = Memcache\Handler::factory()->cache($query, \Memcache\Handler::HOUR, function () use ($query) {
-        require_once __DIR__ . '/libs/MongoSearch/MongoSearch.php';
-
-        $mongoSearch = new MongoSearch();
-        if(($result = $mongoSearch->search($query)) === null) {
-            require_once __DIR__ . '/libs/Vkontakte/Handler.php';
-
-            $vkClient = new Vkontakte\Handler($query);
-            $result = $vkClient->searchWithParse();
-
-            $mongoSearch->set($query, $result);
-        }
-
-        return $result;
-    });
-
     $app->render('layout.php', [
         'page' => 'search',
-        'results' => $results,
+        'results' => search($query),
         'query' => $query,
         'video' => getVideo($query),
         'title' => ucwords($query) . ' download mp3 music | Mp3Cooll.com',

@@ -201,3 +201,25 @@ function banPage($query)
 
     return false;
 }
+
+/**
+ * @param $query
+ * @return mixed
+ */
+function search($query) {
+    return Memcache\Handler::factory()->cache($query, \Memcache\Handler::HOUR, function () use ($query) {
+        require_once __DIR__ . '/libs/Mongo/MongoCache.php';
+
+        $mongoSearch = new MongoCache();
+        if(($result = $mongoSearch->search($query)) === null) {
+            require_once __DIR__ . '/libs/Vkontakte/Handler.php';
+
+            $vkClient = new Vkontakte\Handler($query);
+            $result = $vkClient->searchWithParse();
+
+            $mongoSearch->set($query, $result);
+        }
+
+        return $result;
+    });
+}

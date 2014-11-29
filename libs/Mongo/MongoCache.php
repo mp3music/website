@@ -3,13 +3,15 @@
 /**
  * Class MongoSearch
  */
-class MongoSearch
+class MongoCache
 {
     /**
      * @var MongoClient
      */
     private $client = null;
-
+    /**
+     *
+     */
     const  EXPIRE_SEC = 72000;
 
     /**
@@ -42,7 +44,7 @@ class MongoSearch
         return $this->client->selectDB('search')->selectCollection('cache')->insert([
             'query' => $query,
             'data' => $data,
-            'created' => time()
+            'created' => time() + self::EXPIRE_SEC
         ]);
     }
 
@@ -52,7 +54,7 @@ class MongoSearch
     public function cleanExpiredCache()
     {
         return $this->client->selectDB('search')->selectCollection('cache')->remove([
-            'created' => ['$lte' => time() - self::EXPIRE_SEC]
+            'created' => ['$lte' => time()]
         ]);
     }
-} 
+}
