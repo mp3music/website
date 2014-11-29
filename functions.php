@@ -185,3 +185,19 @@ function saveRequest($query)
         }
     }
 }
+
+function banPage($query)
+{
+    $bans = [
+        'weird-al-all',
+        'skrillex-pop'
+    ];
+
+    foreach ($bans as $ban) {
+        if ($ban == $query) {
+            return true;
+        }
+    }
+
+    return false;
+}

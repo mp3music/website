@@ -61,7 +61,7 @@
                 <p>
                     mp3cooll.com is an easy way to listen music, watch video and download mp3.
                     You can find your favorite songs in our multimillion database of
-                    quality mp3 links. Download free mp3 songs on your android or iPhone devices. We provide fast and
+                    quality mp3 links. Download <?= (isset($query)) ? $query . ' ' : ''; ?>free mp3 songs on your android or iPhone devices. We provide fast and
                     relevant search.
                     Hope you enjoy staying here!
                 </p>
@@ -79,27 +79,6 @@
                      data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
                 <a href="https://www.facebook.com/mp3coollmusic" target="_blank">Mp3Cooll Facebook
                     Page</a>
-            </div>
-
-            <div style="width:310px; margin-top:20px; text-align:right; padding-left:2px;">
-                <script type="text/javascript">(function () {
-                        if (window.pluso)if (typeof window.pluso.start == "function") return;
-                        if (window.ifpluso == undefined) {
-                            window.ifpluso = 1;
-                            var d = document, s = d.createElement('script'), g = 'getElementsByTagName';
-                            s.type = 'text/javascript';
-                            s.charset = 'UTF-8';
-                            s.async = true;
-                            s.src = ('https:' == window.location.protocol ? 'https' : 'http') + '://share.pluso.ru/pluso-like.js';
-                            var h = d[g]('body')[0];
-                            h.appendChild(s);
-                        }
-                    })();</script>
-                <div class="pluso" data-background="transparent"
-                     data-options="medium,round,line,horizontal,counter,theme=04"
-                     data-services="facebook,twitter,google,vkontakte,odnoklassniki"
-                     data-url="http://mp3cooll.com<?= $_SERVER['REQUEST_URI']; ?>" data-title="<?= $title; ?>"
-                     data-description="<?= $description; ?>"></div>
             </div>
 
             <?php if (isset($video) && $video != null) : ?>
@@ -180,6 +159,5 @@
         });
     </script>
 <?php endif; ?>
-
 </body>
 </html>

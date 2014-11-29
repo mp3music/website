@@ -85,7 +85,7 @@ body {
 .jp-type-single {
     float: right;
     position: relative;
-    top: -10px;
+    top: -14px;
 }
 .jp-controls.bs-glyphicons-list {
     list-style: none;
@@ -194,7 +194,7 @@ a.sm2_button.sm2_play:hover {
 .audiojs .scrubber {
     position: relative;
     float: left;
-    width: 66%;
+    width: 85%;
     background: #5a5a5a;
     height: 10px;
     margin: 10px;
@@ -204,12 +204,13 @@ a.sm2_button.sm2_play:hover {
     overflow: hidden;
 }
 .audiojs .time {
+    display: none;
     float: left;
-    height: 30px;
-    line-height: 30px;
+    height: 36px;
+    line-height: 36px;
     margin: 0px 0px 0px 6px;
     padding: 0px 6px 0px 12px;
-    border-left: 1px solid #3D3D3D;
+    border-left: 1px solid #000;
     color: #ddd;
     text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
 }

@@ -54,15 +54,30 @@ $app->get('/now.html', function () use ($app) {
 
 // Search route
 $app->get('/:query.html', function ($query) use ($app) {
+    if(banPage($query)) {
+        header('Status: 404 Not Found');
+        echo '<h1>Page not found</h1>';
+        exit;
+    }
+
     $query = queryLimit(urlclean($query));
     // Save query
     saveRequest($query);
 
     $results = Memcache\Handler::factory()->cache($query, \Memcache\Handler::HOUR, function () use ($query) {
-        require_once __DIR__ . '/libs/Vkontakte/Handler.php';
+        require_once __DIR__ . '/libs/MongoSearch/MongoSearch.php';
 
-        $vkClient = new Vkontakte\Handler($query);
-        return $vkClient->searchWithParse();
+        $mongoSearch = new MongoSearch();
+        if(($result = $mongoSearch->search($query)) === null) {
+            require_once __DIR__ . '/libs/Vkontakte/Handler.php';
+
+            $vkClient = new Vkontakte\Handler($query);
+            $result = $vkClient->searchWithParse();
+
+            $mongoSearch->set($query, $result);
+        }
+
+        return $result;
     });
 
     $app->render('layout.php', [
@@ -87,10 +102,19 @@ $app->get('/search', function () use ($app) {
     saveRequest($query);
 
     $results = Memcache\Handler::factory()->cache($query, \Memcache\Handler::HOUR, function () use ($query) {
-        require_once __DIR__ . '/libs/Vkontakte/Handler.php';
+        require_once __DIR__ . '/libs/MongoSearch/MongoSearch.php';
 
-        $vkClient = new Vkontakte\Handler($query);
-        return $vkClient->searchWithParse();
+        $mongoSearch = new MongoSearch();
+        if(($result = $mongoSearch->search($query)) === null) {
+            require_once __DIR__ . '/libs/Vkontakte/Handler.php';
+
+            $vkClient = new Vkontakte\Handler($query);
+            $result = $vkClient->searchWithParse();
+
+            $mongoSearch->set($query, $result);
+        }
+
+        return $result;
     });
 
     $app->render('layout.php', [
