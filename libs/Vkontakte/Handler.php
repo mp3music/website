@@ -34,9 +34,9 @@ class Handler
     public function search()
     {
         require_once(ROOT_DIR . '/../api.mp3cooll.com/lib/cloud.php');
-        require_once(ROOT_DIR . '/../api.mp3cooll.com/lib/vkontakte.php');
+        require_once(ROOT_DIR . '/../api.mp3cooll.com/lib/iplayer.php');
 
-        $handler = new \vkontakte([
+        $handler = new \iplayer([
             'query' => $this->query,
             'offset' => 0
         ]);
@@ -67,8 +67,7 @@ class Handler
             if ($wordsCount > 1) {
                 for ($i = 0; $i < $wordsCount; $i++) {
                     unset($newQuery[$wordsCount - 1]);
-                    $this->setQuery(implode(' ', $newQuery));
-                    return $this->searchWithParse();
+                    return $this->setQuery(implode(' ', $newQuery))->searchWithParse();
                 }
             }
         }

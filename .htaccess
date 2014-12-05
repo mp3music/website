@@ -3,7 +3,7 @@ RewriteEngine on
 RewriteBase /
 
 RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
-RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 
 # if a directory or a file exists, use it directly
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -13,18 +13,3 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . index.php
 
 RedirectMatch 404 "(?:.*)/(?:\.git)(?:/.*)?$"
-
-<IfModule mod_expires.c>
-    Header append Cache-Control "public"
-    FileETag MTime Size
-    ExpiresActive On
-    ExpiresDefault "access plus 1 hours"
-    ExpiresByType image/ico "access plus 1 years"
-    ExpiresByType text/css "access plus 1 years"
-    ExpiresByType text/javascript "access plus 1 years"
-    ExpiresByType image/gif "access plus 1 years"
-    ExpiresByType image/jpg "access plus 1 years"
-    ExpiresByType image/jpeg "access plus 1 years"
-    ExpiresByType image/bmp "access plus 1 years"
-    ExpiresByType image/png "access plus 1 years"
-</IfModule>

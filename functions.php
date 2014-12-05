@@ -73,7 +73,7 @@ function randomArtists($limit = 10)
  */
 function getVideo($query)
 {
-    return Memcache\Handler::factory()->cache($query . '_video', Memcache\Handler::HOUR, function () use ($query) {
+    return Memcache\Handler::factory()->cache($query . '_video', Memcache\Handler::DAY, function () use ($query) {
         $json = json_decode(file_get_contents('http://gdata.youtube.com/feeds/api/videos?max-results=1&alt=json&q=' . urlencode($query)),
             true);
 

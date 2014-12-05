@@ -5,25 +5,21 @@ require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/functions.php';
 require_once __DIR__ . '/libs/Memcache/Handler.php';
 
-$app = new \Slim\Slim();
-
-// Set view settings
-$view = $app->view();
-$view->setTemplatesDirectory(TEMPLATES_DIR);
+$app = new \Slim\Slim([
+    'templates.path' => TEMPLATES_DIR
+]);
 
 // Set routes
 // Main page route
 $app->get('/', function () use ($app) {
-    $xmlString = Memcache\Handler::factory()->cache('maintop', Memcache\Handler::DAY, function () {
-        return file_get_contents('http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=50/xml');
+    $results = Memcache\Handler::factory()->cache('maintop', Memcache\Handler::DAY, function () {
+        $xml = new SimpleXMLElement(file_get_contents('http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=50/xml'));
+        return json_encode($xml);
     });
-
-    $xml = new SimpleXMLElement($xmlString);
-    $results = $xml->entry;
 
     $app->render('layout.php', [
         'page' => 'main',
-        'results' => $results,
+        'results' => json_decode($results, true)['entry'],
         'title' => 'Download mp3 free | Quick Search music | Download music for free',
         'description' => 'Download free most popular mp3 and listen online music just now. Watch music video online'
     ]);
@@ -32,21 +28,9 @@ $app->get('/', function () use ($app) {
  *
  */
 $app->get('/now.html', function () use ($app) {
-    $results = Memcache\Handler::factory()->cache('now', Memcache\Handler::MINUTE, function () {
-        $source = Sunra\PhpSimple\HtmlDomParser::file_get_html('http://mp3skull.com/latest.html');
-        $links = $source->find('#content a');
-        $result = [];
-
-        foreach ($links as $link) {
-            $result[] = $link->innertext;
-        }
-
-        return $result;
-    });
-
     $app->render('layout.php', [
         'page' => 'now',
-        'results' => $results,
+        'results' => getLastQueries(30),
         'title' => 'Now Playing On Mp3Cooll.com',
         'description' => 'Users listen now on mp3cooll.com'
     ]);
