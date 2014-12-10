@@ -190,7 +190,8 @@ function banPage($query)
 {
     $bans = [
         'weird-al-all',
-        'skrillex-pop'
+        'skrillex-pop',
+        'weird-al-headline-news'
     ];
 
     foreach ($bans as $ban) {

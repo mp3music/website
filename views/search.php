@@ -6,8 +6,6 @@
 		<?php if (count($results) && isset($results['result'])) : ?>
 
 			<?php foreach ($results['result'] as $item) : ?>
-				<?php $downloadUrl = '/dl.php?link=' . urlencode($item['url']) . '&name=' . urlclean($item['title'] . '-' . $item['artist']['name'],
-						'-') . '.mp3'; ?>
 				<li class="list-group-item list-group-item-custom">
 					<div id="jp_container_1" class="jp-audio">
 						<strong class="track_title"><?= s($item['title'], 70); ?></strong>
@@ -20,7 +18,7 @@
 										<a class="sm2_button sm2_play inline-playable" tabindex="1" data-src="<?= $item['url']; ?>"></a>
 									</li>
 									<li>
-										<a class="download-button" href="<?= $downloadUrl; ?>"></a>
+										<a class="download-button" href="<?= $item['url']; ?>"></a>
 									</li>
 								</ul>
 							</div>

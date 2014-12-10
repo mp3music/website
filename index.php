@@ -13,7 +13,7 @@ $app = new \Slim\Slim([
 // Main page route
 $app->get('/', function () use ($app) {
     $results = Memcache\Handler::factory()->cache('maintop', Memcache\Handler::DAY, function () {
-        $xml = new SimpleXMLElement(file_get_contents('http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=50/xml'));
+        $xml = new SimpleXMLElement(file_get_contents('http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=30/xml'));
         return json_encode($xml);
     });
 
