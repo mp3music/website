@@ -37,6 +37,15 @@ $app->get('/now.html', function () use ($app) {
 });
 
 // Search route
+$app->get('/disclamer.html', function () use ($app) {
+    $app->render('layout.php', [
+        'page' => 'disclamer',
+        'title' => 'Disclamer | Mp3Cooll.com',
+        'description' => 'Download mp3 and listen online song just now unlimited. Watch video'
+    ]);
+});
+
+// Search route
 $app->get('/:query.html', function ($query) use ($app) {
     if(banPage($query)) {
         header('Status: 404 Not Found');

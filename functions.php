@@ -34,7 +34,7 @@ function s($string, $limit = 34, $points = true)
  */
 function getLastQueries($limit = 10)
 {
-    $results = Memcache\Handler::factory()->cache('now', 10, function () {
+    $results = Memcache\Handler::factory()->cache('now', 5, function () {
         $source = Sunra\PhpSimple\HtmlDomParser::file_get_html('http://mp3skull.com/latest.html');
         $links = $source->find('#content a');
         $result = [];
@@ -186,6 +186,10 @@ function saveRequest($query)
     }
 }
 
+/**
+ * @param $query
+ * @return bool
+ */
 function banPage($query)
 {
     $bans = [
