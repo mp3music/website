@@ -217,7 +217,7 @@ function search($query) {
 
         $mongoSearch = new MongoCache();
         if(($result = $mongoSearch->search($query)) === null) {
-            require_once __DIR__ . '/libs/Vkontakte/Handler.php';
+            require_once __DIR__ . '/libs/Searcher/Handler.php';
 
             $vkClient = new Searcher\Handler($query);
             $result = $vkClient->searchWithParse();
