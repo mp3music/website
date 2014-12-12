@@ -1,11 +1,11 @@
 <?php
 
-namespace Vkontakte;
+namespace Searcher;
 
 /**
  * Class Handler
  *
- * @package Vkontakte
+ * @package Searcher
  */
 class Handler
 {

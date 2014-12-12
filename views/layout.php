@@ -38,13 +38,11 @@
 
         <div class="col-sm-4 col-xs-12 blog-sidebar">
             <div class="sidebar-module sidebar-archives">
-                <p>
-                    mp3cooll.com is an easy way to listen music, watch video and download mp3.
+                <p>mp3cooll.com is an easy way to listen music, watch video and download mp3.
                     You can find your favorite songs in our multimillion database of
                     quality mp3 links. Download <?= (isset($query)) ? $query . ' ' : ''; ?>free mp3 songs on your android or iPhone devices. We provide fast and
                     relevant search.
-                    Hope you enjoy staying here!
-                </p>
+                    Hope you enjoy staying here!</p>
 
                 <div id="fb-root"></div>
                 <div class="fb-like" data-href="https://www.facebook.com/pages/Mp3Cooll/342836852560201" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
