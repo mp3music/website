@@ -81,9 +81,8 @@ function getVideo($query)
             return null;
         }
 
-        return '<iframe id="ytplayer" type="text/html" width="100%" height="200" src="' . str_replace('/v/', '/embed/',
-            $json['feed']['entry'][0]['media$group']['media$content'][0]['url']) . '&autohide=1&
-iv_load_policy=3&color=white&theme=light&showinfo=0" frameborder="0"></iframe>';
+        $url = str_replace(['/v/', 'http:'], ['/embed/', 'https:'], $json['feed']['entry'][0]['media$group']['media$content'][0]['url']);
+        return '<iframe id="ytplayer" type="text/html" width="100%" height="200" src="' . $url . '&autohide=1&iv_load_policy=3&color=white&theme=light&showinfo=0" frameborder="0"></iframe>';
     });
 }
 
