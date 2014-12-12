@@ -1,5 +1,6 @@
 <?php
 define('ROOT_DIR', __DIR__);
+
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/functions.php';
@@ -9,8 +10,9 @@ $app = new \Slim\Slim([
     'templates.path' => TEMPLATES_DIR
 ]);
 
-// Set routes
-// Main page route
+/**
+ * Main page
+ */
 $app->get('/', function () use ($app) {
     $results = Memcache\Handler::factory()->cache('maintop', Memcache\Handler::DAY, function () {
         $xml = new SimpleXMLElement(file_get_contents('http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=30/xml'));
@@ -24,8 +26,9 @@ $app->get('/', function () use ($app) {
         'description' => 'Download free most popular mp3 and listen online music just now. Watch music video online'
     ]);
 });
+
 /**
- *
+ * Last requests
  */
 $app->get('/now.html', function () use ($app) {
     $app->render('layout.php', [
@@ -36,7 +39,9 @@ $app->get('/now.html', function () use ($app) {
     ]);
 });
 
-// Search route
+/**
+ * Disclamer route
+ */
 $app->get('/disclamer.html', function () use ($app) {
     $app->render('layout.php', [
         'page' => 'disclamer',
@@ -45,7 +50,9 @@ $app->get('/disclamer.html', function () use ($app) {
     ]);
 });
 
-// Search route
+/**
+ * Search route
+ */
 $app->get('/:query.html', function ($query) use ($app) {
     if(banPage($query)) {
         header('Status: 404 Not Found');
@@ -69,6 +76,9 @@ $app->get('/:query.html', function ($query) use ($app) {
     'query' => '.+'
 ]);
 
+/**
+ * Search route
+ */
 $app->get('/search', function () use ($app) {
     $query = queryLimit(urlclean($_GET['q']));
     if (strlen($query) < 1) {
@@ -88,11 +98,16 @@ $app->get('/search', function () use ($app) {
     ]);
 });
 
-// Search route
+/**
+ * Search route
+ */
 $app->get('/:query', function ($query) use ($app) {
     $app->redirect('/' . urlclean($query, '-') . '.html');
 })->conditions([
     'query' => '.+'
 ]);
 
+/**
+ * Run application
+ */
 $app->run();
