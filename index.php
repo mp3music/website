@@ -101,6 +101,28 @@ $app->get('/search', function () use ($app) {
 /**
  * Search route
  */
+$app->get('/searchtest', function () use ($app) {
+    $query = queryLimit(urlclean($_GET['q']));
+    if (strlen($query) < 1) {
+        $app->redirect('/');
+    }
+    searchElastic($query);
+    // Save query
+    saveRequest($query);
+
+    $app->render('layout.php', [
+        'page' => 'searchtest',
+        'results' => searchElastic($query),
+        'query' => $query,
+        'video' => getVideo($query),
+        'title' => ucwords($query) . ' download mp3 music | Mp3Cooll.com',
+        'description' => 'Download ' . ucwords($query) . ' mp3 and listen online song ' . ucwords($query) . ' just now unlimited. Watch video '
+    ]);
+});
+
+/**
+ * Search route
+ */
 $app->get('/:query', function ($query) use ($app) {
     $app->redirect('/' . urlclean($query, '-') . '.html');
 })->conditions([

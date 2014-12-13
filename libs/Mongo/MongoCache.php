@@ -20,7 +20,7 @@ class MongoCache
     public function __construct()
     {
         if ($this->client == null) {
-            $this->client = new MongoClient();
+            $this->client = new MongoClient(MONGO_DSN);
         }
     }
 

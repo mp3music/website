@@ -227,3 +227,20 @@ function search($query) {
         return $result;
     });
 }
+
+/**
+ * @param $query
+ * @return mixed
+ */
+function searchElastic($query) {
+    $start = microtime(true);
+    $client = new Elasticsearch\Client();
+
+    $searchParams['index'] = 'music';
+    $searchParams['type']  = 'tracks';
+    $searchParams['body']['query']['query_string']['query'] = $query;
+    $searchParams['body']['sort'] = [['rating' => 'desc'], "_score"];
+
+     $client->search($searchParams)['hits']['hits'];
+    echo round(microtime(true) - $start, 5);die;
+}
