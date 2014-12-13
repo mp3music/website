@@ -1,75 +1,135 @@
 <?php
+define('ROOT_DIR', __DIR__);
+
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/functions.php';
 require_once __DIR__ . '/libs/Memcache/Handler.php';
 
-$app = new \Slim\Slim();
+$app = new \Slim\Slim([
+    'templates.path' => TEMPLATES_DIR
+]);
 
-// Set view settings
-$view = $app->view();
-$view->setTemplatesDirectory(TEMPLATES_DIR);
-
-// Set routes
-// Main page route
+/**
+ * Main page
+ */
 $app->get('/', function () use ($app) {
-        $xmlString = Memcache\Handler::factory()->cache('top', Memcache\Handler::DAY, function () {
-            return file_get_contents('http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=50/xml');
-        });
+    $results = Memcache\Handler::factory()->cache('maintop', Memcache\Handler::DAY, function () {
+        $xml = new SimpleXMLElement(file_get_contents('http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=30/xml'));
+        return json_encode($xml);
+    });
 
-        $xml = new SimpleXMLElement($xmlString);
-        $results = $xml->entry;
+    $app->render('layout.php', [
+        'page' => 'main',
+        'results' => json_decode($results, true)['entry'],
+        'title' => 'Download mp3 free | Quick Search music | Download music for free',
+        'description' => 'Download free most popular mp3 and listen online music just now. Watch music video online'
+    ]);
+});
 
-        $app->render('layout.php', [
-            'page' => 'main',
-            'results' => $results,
-            'title' => 'Download mp3 free | Quick Search music | Download music for free',
-            'description' => 'Download free most popular mp3 and listen online music just now'
-        ]);
-    }
-);
+/**
+ * Last requests
+ */
+$app->get('/now.html', function () use ($app) {
+    $app->render('layout.php', [
+        'page' => 'now',
+        'results' => getLastQueries(30),
+        'title' => 'Now Playing On Mp3Cooll.com',
+        'description' => 'Users listen now on mp3cooll.com'
+    ]);
+});
 
-// Search route
+/**
+ * Disclamer route
+ */
+$app->get('/disclamer.html', function () use ($app) {
+    $app->render('layout.php', [
+        'page' => 'disclamer',
+        'title' => 'Disclamer | Mp3Cooll.com',
+        'description' => 'Download mp3 and listen online song just now unlimited. Watch video'
+    ]);
+});
+
+/**
+ * Search route
+ */
 $app->get('/:query.html', function ($query) use ($app) {
-        $query = urlclean($query);
-
-        // Save request
-        $client = new MongoClient(MONGO_DSN);
-        $collection = $client->selectDB(MONGO_DBNAME)->selectCollection(MONGO_COLLECTION);
-        if ($collection->find(['request' => $query])) {
-            $collection->insert([
-                'request' => $query,
-                'created' => new MongoDate(),
-                'views' => 1
-            ]);
-        } else {
-            $collection->update(['request' => $query], ['$inc' => ['views' => 1]]);
-        }
-
-        require_once __DIR__ . '/libs/Vkontakte/Handler.php';
-
-        $vkClient = new Vkontakte\Handler($query);
-        $results = $vkClient->searchWithParse();
-
-        $app->render('layout.php', [
-            'page' => 'search',
-            'results' => $results,
-            'query' => $query,
-            'video' => getVideo($query),
-            'title' => ucwords($query) . ' download mp3 music | Mp3Cooll.com',
-            'description' => 'Download ' . ucwords($query) . ' mp3 and listen online song ' . ucwords($query) . ' just now unlimited.'
-        ]);
+    if(banPage($query)) {
+        header('Status: 404 Not Found');
+        echo '<h1>Page not found</h1>';
+        exit;
     }
-)->conditions([
+
+    $query = queryLimit(urlclean($query));
+    // Save query
+    saveRequest($query);
+
+    $app->render('layout.php', [
+        'page' => 'search',
+        'results' => search($query),
+        'query' => $query,
+        'video' => getVideo($query),
+        'title' => ucwords($query) . ' download mp3 music | Mp3Cooll.com',
+        'description' => 'Download ' . ucwords($query) . ' mp3 and listen online song ' . ucwords($query) . ' just now unlimited. Watch video '
+    ]);
+})->conditions([
     'query' => '.+'
 ]);
 
-// Search route
+/**
+ * Search route
+ */
+$app->get('/search', function () use ($app) {
+    $query = queryLimit(urlclean($_GET['q']));
+    if (strlen($query) < 1) {
+        $app->redirect('/');
+    }
+
+    // Save query
+    saveRequest($query);
+
+    $app->render('layout.php', [
+        'page' => 'search',
+        'results' => search($query),
+        'query' => $query,
+        'video' => getVideo($query),
+        'title' => ucwords($query) . ' download mp3 music | Mp3Cooll.com',
+        'description' => 'Download ' . ucwords($query) . ' mp3 and listen online song ' . ucwords($query) . ' just now unlimited. Watch video '
+    ]);
+});
+
+/**
+ * Search route
+ */
+$app->get('/searchtest', function () use ($app) {
+    $query = queryLimit(urlclean($_GET['q']));
+    if (strlen($query) < 1) {
+        $app->redirect('/');
+    }
+    searchElastic($query);
+    // Save query
+    saveRequest($query);
+
+    $app->render('layout.php', [
+        'page' => 'searchtest',
+        'results' => searchElastic($query),
+        'query' => $query,
+        'video' => getVideo($query),
+        'title' => ucwords($query) . ' download mp3 music | Mp3Cooll.com',
+        'description' => 'Download ' . ucwords($query) . ' mp3 and listen online song ' . ucwords($query) . ' just now unlimited. Watch video '
+    ]);
+});
+
+/**
+ * Search route
+ */
 $app->get('/:query', function ($query) use ($app) {
-        $app->redirect('/' . urlclean($query, '-') . '.html');
-    }
-)->conditions([
+    $app->redirect('/' . urlclean($query, '-') . '.html');
+})->conditions([
     'query' => '.+'
 ]);
 
+/**
+ * Run application
+ */
 $app->run();

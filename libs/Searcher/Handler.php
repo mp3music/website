@@ -1,13 +1,11 @@
 <?php
 
-namespace Vkontakte;
-
-use \dHttp\Client;
+namespace Searcher;
 
 /**
  * Class Handler
  *
- * @package Vkontakte
+ * @package Searcher
  */
 class Handler
 {
@@ -35,8 +33,25 @@ class Handler
      */
     public function search()
     {
-        $http = new Client($this->buildRequestUri());
-        return json_decode($http->get()->getBody(), true);
+        require_once(ROOT_DIR . '/../api.mp3cooll.com/lib/cloud.php');
+        require_once(ROOT_DIR . '/../api.mp3cooll.com/lib/iplayer.php');
+
+        $handler = new \iplayer([
+            'query' => $this->query,
+            'offset' => 0
+        ]);
+
+        if(count(($results = $handler->search())) == 0) {
+            require_once(ROOT_DIR . '/../api.mp3cooll.com/lib/eee.php');
+            $handler = new \eee([
+                'query' => $this->query,
+                'offset' => 0
+            ]);
+
+            $results = $handler->search();
+        }
+
+        return ['result' => $results];
     }
 
     /**
@@ -52,8 +67,7 @@ class Handler
             if ($wordsCount > 1) {
                 for ($i = 0; $i < $wordsCount; $i++) {
                     unset($newQuery[$wordsCount - 1]);
-                    $this->setQuery(implode(' ', $newQuery));
-                    return $this->searchWithParse();
+                    return $this->setQuery(implode(' ', $newQuery))->searchWithParse();
                 }
             }
         }
@@ -79,13 +93,5 @@ class Handler
     {
         $this->limit = $limit;
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    private function buildRequestUri()
-    {
-        return 'http://api.mp3cooll.com/api/?query=' . urlencode($this->query) . '&api_key=123';
     }
 }
