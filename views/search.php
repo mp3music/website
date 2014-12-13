@@ -8,8 +8,8 @@
 			<?php foreach ($results['result'] as $item) : ?>
 				<li class="list-group-item list-group-item-custom">
 					<div id="jp_container_1" class="jp-audio">
-						<strong class="track_title"><?= s($item['title'], 70); ?></strong>
-						<br><span class="artist_name"><?= s($item['artist']['name'], 70); ?></span>&nbsp;&nbsp;<span class="duration">(<?= $item['duration']; ?>)</span>
+						<strong class="track_title"><?= s($item['title'], 60); ?></strong>
+						<br><span class="artist_name"><?= s($item['artist']['name'], 60); ?></span>&nbsp;&nbsp;<span class="duration">(<?= $item['duration']; ?>)</span>
 
 						<div class="jp-type-single">
 							<div class="jp-gui jp-interface">

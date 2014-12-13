@@ -80,7 +80,7 @@
     </div>
 </div>
 <script>
-    var player = <?= isset($query); ?>
+    var player = <?= isset($query) ? 'true' : 'false'; ?>;
 </script>
 <script>
     var boostrap = document.createElement('link');
@@ -92,13 +92,9 @@
     script.setAttribute('src', '/assets/js/main.js');
     if(player) {
         script.onload = function() {
-            var scripts = ['/assets/js/audiojs/audio.min.js', '/assets/js/player.js'];
-
-            for(var i = 0; i < scripts.length; i++) {
-                var script = document.createElement('script');
-                script.setAttribute('src', scripts[i]);
-                document.getElementsByTagName('head')[0].appendChild(script);
-            }
+            var script = document.createElement('script');
+            script.setAttribute('src', '/assets/js/audio.min.js');
+            document.getElementsByTagName('head')[0].appendChild(script);
         };
     }
 
