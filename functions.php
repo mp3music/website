@@ -230,17 +230,16 @@ function search($query) {
 
 /**
  * @param $query
+ * @param int $limit
  * @return mixed
  */
-function searchElastic($query) {
-    $start = microtime(true);
-    $client = new Elasticsearch\Client();
+function searchMongo($query, $limit = 30) {
+    return Memcache\Handler::factory()->cache($query . '_mongo', \Memcache\Handler::HOUR, function () use ($query, $limit) {
+        $client = new MongoClient(MONGO_DSN);
 
-    $searchParams['index'] = 'music';
-    $searchParams['type']  = 'tracks';
-    $searchParams['body']['query']['query_string']['query'] = $query;
-    $searchParams['body']['sort'] = [['rating' => 'desc'], "_score"];
-
-     $client->search($searchParams)['hits']['hits'];
-    echo round(microtime(true) - $start, 5);die;
+        $collection = $client->music->tracks;
+        return iterator_to_array($collection->find(['$text' => ['$search' => $query]], ['score' => ['$meta' => 'textScore']])
+            ->sort(['rating' => -1, 'score' => ['$meta' => 'textScore']])
+            ->limit($limit));
+    });
 }

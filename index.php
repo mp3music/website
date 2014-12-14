@@ -106,19 +106,29 @@ $app->get('/searchtest', function () use ($app) {
     if (strlen($query) < 1) {
         $app->redirect('/');
     }
-    searchElastic($query);
+
     // Save query
     saveRequest($query);
 
     $app->render('layout.php', [
         'page' => 'searchtest',
-        'results' => searchElastic($query),
+        'results' => searchMongo($query),
         'query' => $query,
         'video' => getVideo($query),
         'title' => ucwords($query) . ' download mp3 music | Mp3Cooll.com',
         'description' => 'Download ' . ucwords($query) . ' mp3 and listen online song ' . ucwords($query) . ' just now unlimited. Watch video '
     ]);
 });
+
+/**
+ * Rating
+ */
+$app->get('/rating/:id', function ($id) use ($app) {
+    $client = new MongoClient(MONGO_DSN);
+    $client->music->tracks->update(['_id' => new MongoId($id)], ['$inc' => ['rating' => 1]], ['upsert' => true]);
+})->conditions([
+    'id' => '[a-z0-9]+'
+]);
 
 /**
  * Search route
