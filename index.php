@@ -65,8 +65,8 @@ $app->get('/:query.html', function ($query) use ($app) {
     saveRequest($query);
 
     $app->render('layout.php', [
-        'page' => 'searchtest',
-        'results' => searchMongo($query),
+        'page' => 'search',
+        'results' => search($query),
         'query' => $query,
         'video' => getVideo($query),
         'title' => ucwords($query) . ' download mp3 music | Mp3Cooll.com',
@@ -89,8 +89,8 @@ $app->get('/search', function () use ($app) {
     saveRequest($query);
 
     $app->render('layout.php', [
-        'page' => 'searchtest',
-        'results' => searchMongo($query),
+        'page' => 'search',
+        'results' => search($query),
         'query' => $query,
         'video' => getVideo($query),
         'title' => ucwords($query) . ' download mp3 music | Mp3Cooll.com',

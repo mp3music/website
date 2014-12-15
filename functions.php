@@ -227,19 +227,3 @@ function search($query) {
         return $result;
     });
 }
-
-/**
- * @param $query
- * @param int $limit
- * @return mixed
- */
-function searchMongo($query, $limit = 30) {
-    return Memcache\Handler::factory()->cache($query . '_mongo', \Memcache\Handler::HOUR, function () use ($query, $limit) {
-        $client = new MongoClient(MONGO_DSN);
-
-        $collection = $client->music->tracks;
-        return iterator_to_array($collection->find(['$text' => ['$search' => queryLimit($query)]], ['score' => ['$meta' => 'textScore']])
-            ->sort(['rating' => -1, 'score' => ['$meta' => 'textScore']])
-            ->limit($limit));
-    });
-}
