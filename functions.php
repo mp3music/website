@@ -7,7 +7,7 @@
 function urlclean($string, $delimiter = ' ')
 {
     // Clean
-    $string = preg_replace('/[^\p{L}\d]/u', ' ', $string);
+    $string = preg_replace('/[^\p{L}\d\'\(\)\.\,]/u', ' ', $string);
     return mb_strtolower(preg_replace('/(\s{1})\1*/ui', $delimiter, trim($string)), 'utf-8');
 }
 
@@ -238,7 +238,7 @@ function searchMongo($query, $limit = 30) {
         $client = new MongoClient(MONGO_DSN);
 
         $collection = $client->music->tracks;
-        return iterator_to_array($collection->find(['$text' => ['$search' => $query]], ['score' => ['$meta' => 'textScore']])
+        return iterator_to_array($collection->find(['$text' => ['$search' => queryLimit($query)]], ['score' => ['$meta' => 'textScore']])
             ->sort(['rating' => -1, 'score' => ['$meta' => 'textScore']])
             ->limit($limit));
     });

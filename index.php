@@ -60,13 +60,13 @@ $app->get('/:query.html', function ($query) use ($app) {
         exit;
     }
 
-    $query = queryLimit(urlclean($query));
+    $query = urlclean($query);
     // Save query
     saveRequest($query);
 
     $app->render('layout.php', [
-        'page' => 'search',
-        'results' => search($query),
+        'page' => 'searchtest',
+        'results' => searchMongo($query),
         'query' => $query,
         'video' => getVideo($query),
         'title' => ucwords($query) . ' download mp3 music | Mp3Cooll.com',
@@ -80,29 +80,7 @@ $app->get('/:query.html', function ($query) use ($app) {
  * Search route
  */
 $app->get('/search', function () use ($app) {
-    $query = queryLimit(urlclean($_GET['q']));
-    if (strlen($query) < 1) {
-        $app->redirect('/');
-    }
-
-    // Save query
-    saveRequest($query);
-
-    $app->render('layout.php', [
-        'page' => 'search',
-        'results' => search($query),
-        'query' => $query,
-        'video' => getVideo($query),
-        'title' => ucwords($query) . ' download mp3 music | Mp3Cooll.com',
-        'description' => 'Download ' . ucwords($query) . ' mp3 and listen online song ' . ucwords($query) . ' just now unlimited. Watch video '
-    ]);
-});
-
-/**
- * Search route
- */
-$app->get('/searchtest', function () use ($app) {
-    $query = queryLimit(urlclean($_GET['q']));
+    $query = urlclean($_GET['q']);
     if (strlen($query) < 1) {
         $app->redirect('/');
     }
