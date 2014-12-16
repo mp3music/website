@@ -8,22 +8,18 @@ $client = new MongoClient(MONGO_DSN);
 $requestCollection = $client->music->requests;
 $requests = $requestCollection->find()->sort(['views' => -1])->limit(100);
 
-$client = new Elasticsearch\Client();
-$params = array();
-
-$params['index'] = 'music';
-$params['type']  = 'tracks';
-
 foreach ($requests as $query) {
     $vkClient = new Searcher\Handler($query['request']);
     $result = $vkClient->searchWithParse();
+    $collection = $client->music->tracks;
 
     foreach ($result['result'] as $item) {
         try {
             $item['artist'] = $item['artist']['name'];
             $item['rating'] = 0;
-            $params['body']  = $item;
-            $ret = $client->index($params);
+            if (!$collection->findOne(['url' => $item['url']])) {
+                $collection->insert($item);
+            }
         } catch (Exception $e) {
 
         }

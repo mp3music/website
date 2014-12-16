@@ -33,8 +33,8 @@ class Handler
      */
     public function search()
     {
-        require_once(ROOT_DIR . '/../api.mp3cooll.com/lib/cloud.php');
-        require_once(ROOT_DIR . '/../api.mp3cooll.com/lib/iplayer.php');
+        require_once(ROOT_DIR . '/libs/cloud/cloud.php');
+        require_once(ROOT_DIR . '/libs/cloud/iplayer.php');
 
         $handler = new \iplayer([
             'query' => $this->query,
@@ -42,7 +42,7 @@ class Handler
         ]);
 
         if(count(($results = $handler->search())) == 0) {
-            require_once(ROOT_DIR . '/../api.mp3cooll.com/lib/eee.php');
+            require_once(ROOT_DIR . '/libs/cloud/eee.php');
             $handler = new \eee([
                 'query' => $this->query,
                 'offset' => 0
