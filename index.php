@@ -99,16 +99,6 @@ $app->get('/search', function () use ($app) {
 });
 
 /**
- * Rating
- */
-$app->get('/rating/:id', function ($id) use ($app) {
-    $client = new MongoClient(MONGO_DSN);
-    $client->music->tracks->update(['_id' => new MongoId($id)], ['$inc' => ['rating' => 1]], ['upsert' => true]);
-})->conditions([
-    'id' => '[a-z0-9]+'
-]);
-
-/**
  * Search route
  */
 $app->get('/:query', function ($query) use ($app) {
