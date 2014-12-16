@@ -83,7 +83,7 @@ function getVideo($query)
 
         $url = str_replace(['/v/', 'http:'], ['/embed/', 'https:'],
             $json['feed']['entry'][0]['media$group']['media$content'][0]['url']);
-        return '<iframe id="ytplayer" type="text/html" width="100%" height="200" src="' . $url . '&autohide=1&iv_load_policy=3&color=white&theme=light&showinfo=0" frameborder="0"></iframe>';
+        return $url;
     });
 }
 
@@ -237,5 +237,13 @@ function search($query)
  */
 function convertVideoToAudio($url)
 {
-    return json_decode(file_get_contents('http://youtubeinmp3.com/fetch/?api=advanced&format=JSON&video=' . $url), true);
+    try {
+        preg_match('/embed\/(.*)\?/iu', $url, $matches);
+        if(isset($matches[1])) {
+            return 'http://youtubeinmp3.com/fetch/?video=http://www.youtube.com/watch?v=' . $matches[1];
+        }
+    }
+    catch(Exception $e) {
+        return false;
+    }
 }

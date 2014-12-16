@@ -40,7 +40,9 @@
             <?php if (isset($video) && $video != null) : ?>
                 <div class="sidebar-module sidebar-now-playing">
                     <div class="label label-info label-info-custom"><?= $query; ?> video</div>
-                    <?= $video; ?>
+                    <iframe id="ytplayer" type="text/html" width="100%" height="200" src="<?= $video; ?>&autohide=1&iv_load_policy=3&color=white&theme=light&showinfo=0" frameborder="0"></iframe>
+                    <a href="#" id="youtube" data-link="<?= convertVideoToAudio($video); ?>">Download mp3 from YouTube</a>
+
                 </div>
             <?php endif; ?>
 
