@@ -40,8 +40,9 @@ class Handler
             'query' => $this->query,
             'offset' => 0
         ]);
+        $results = $handler->search();
 
-        if(count(($results = $handler->search())) == 0) {
+        if(count($results) == 0) {
             require_once(ROOT_DIR . '/libs/cloud/eee.php');
             $handler = new \eee([
                 'query' => $this->query,

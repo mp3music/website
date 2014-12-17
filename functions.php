@@ -81,8 +81,9 @@ function getVideo($query)
             return null;
         }
 
-        $url = str_replace(['/v/', 'http:'], ['/embed/', 'https:'], $json['feed']['entry'][0]['media$group']['media$content'][0]['url']);
-        return '<iframe id="ytplayer" type="text/html" width="100%" height="200" src="' . $url . '&autohide=1&iv_load_policy=3&color=white&theme=light&showinfo=0" frameborder="0"></iframe>';
+        $url = str_replace(['/v/', 'http:'], ['/embed/', 'https:'],
+            $json['feed']['entry'][0]['media$group']['media$content'][0]['url']);
+        return $url;
     });
 }
 
@@ -210,12 +211,13 @@ function banPage($query)
  * @param $query
  * @return mixed
  */
-function search($query) {
+function search($query)
+{
     return Memcache\Handler::factory()->cache($query, \Memcache\Handler::HOUR, function () use ($query) {
         require_once __DIR__ . '/libs/Mongo/MongoCache.php';
 
         $mongoSearch = new MongoCache();
-        if(($result = $mongoSearch->search($query)) === null) {
+        if (($result = $mongoSearch->search($query)) === null) {
             require_once __DIR__ . '/libs/Searcher/Handler.php';
 
             $vkClient = new Searcher\Handler($query);
@@ -224,6 +226,45 @@ function search($query) {
             $mongoSearch->set($query, $result);
         }
 
+        return $result;
+    });
+}
+
+/**
+ * Convert Video To Audio
+ * @param string $url
+ * @return array
+ */
+function convertVideoToAudio($url)
+{
+    try {
+        preg_match('/embed\/(.*)\?/iu', $url, $matches);
+        if (isset($matches[1])) {
+            return 'http://youtubeinmp3.com/fetch/?video=http://www.youtube.com/watch?v=' . $matches[1];
+        }
+    } catch (Exception $e) {
+        return false;
+    }
+}
+
+/**
+ * @param $request
+ * @return array
+ */
+function getAutocompleteData($request)
+{
+    return Memcache\Handler::factory()->cache($request . '_autocomplete', \Memcache\Handler::MINUTE, function () use ($request) {
+        $client = new MongoClient(MONGO_DSN);
+        $collection = $client->selectDB(MONGO_DBNAME)->selectCollection(MONGO_COLLECTION);
+
+        $records = $collection->find(['request' => array('$regex' => new MongoRegex('/^' . $request . '/i'))])
+            ->sort(['request' => 1])
+            ->limit(10);
+
+        $result = [];
+        foreach ($records as $item) {
+            $result[] = ['value' => $item['request'], 'data' => ucwords($item['request'])];
+        }
         return $result;
     });
 }

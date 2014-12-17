@@ -18,23 +18,25 @@ class iplayer extends cloud
     public function search()
     {
         $page = $this->getSource();
-        $doc = Sunra\PhpSimple\HtmlDomParser::str_get_html($page->getBody());
-
-        $elements = $doc->find('li.track');
-
         $audios = [];
-        foreach ($elements as $item) {
-            preg_match('/[0-9\:]+/iu', strip_tags($item->find('em', 0)->innertext()), $match);
 
-            if (isset($match[0])) {
-                $audios[] = array(
-                    'artist' => [
-                        'name' => ucwords($this->clearstr(html_entity_decode(trim($item->find('b', 0)->innertext()))))
-                    ],
-                    'title' => ucwords($this->clearstr(html_entity_decode(trim($item->find('span', 0)->innertext())))),
-                    'duration' => $match[0],
-                    'url' => $item->find('a.playlist-down', 0)->href
-                );
+        if (count($page->getErrors()) == 0) {
+            $doc = Sunra\PhpSimple\HtmlDomParser::str_get_html($page->getBody());
+            $elements = $doc->find('li.track');
+
+            foreach ($elements as $item) {
+                preg_match('/[0-9\:]+/iu', strip_tags($item->find('em', 0)->innertext()), $match);
+
+                if (isset($match[0])) {
+                    $audios[] = array(
+                        'artist' => [
+                            'name' => ucwords($this->clearstr(html_entity_decode(trim($item->find('b', 0)->innertext()))))
+                        ],
+                        'title' => ucwords($this->clearstr(html_entity_decode(trim($item->find('span', 0)->innertext())))),
+                        'duration' => $match[0],
+                        'url' => $item->find('a.playlist-down', 0)->href
+                    );
+                }
             }
         }
 

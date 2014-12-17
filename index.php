@@ -99,6 +99,17 @@ $app->get('/search', function () use ($app) {
 });
 
 /**
+ * Autocomplete route
+ */
+$app->get('/autocomplete', function () use ($app) {
+    //$_GET['query']
+    echo json_encode([
+        'query' => $_GET['query'],
+        'suggestions' => getAutocompleteData($_GET['query'])
+    ]);
+});
+
+/**
  * Search route
  */
 $app->get('/:query', function ($query) use ($app) {
