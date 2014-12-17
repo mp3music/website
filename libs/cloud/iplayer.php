@@ -18,12 +18,11 @@ class iplayer extends cloud
     public function search()
     {
         $page = $this->getSource();
-        $doc = Sunra\PhpSimple\HtmlDomParser::str_get_html($page->getBody());
         $audios = [];
 
-        if($doc) {
+        if (count($page->getErrors()) == 0) {
+            $doc = Sunra\PhpSimple\HtmlDomParser::str_get_html($page->getBody());
             $elements = $doc->find('li.track');
-
 
             foreach ($elements as $item) {
                 preg_match('/[0-9\:]+/iu', strip_tags($item->find('em', 0)->innertext()), $match);
